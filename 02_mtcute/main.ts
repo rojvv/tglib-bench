@@ -34,5 +34,5 @@ dates.push(new Date());
 await tg.close();
 writeFileSync(
   "results.json",
-  JSON.stringify(dates.map((v) => v.getTime() / 1_000)),
+  JSON.stringify([document.byteLength, dates.map((v) => v.getTime() / 1_000)]),
 );

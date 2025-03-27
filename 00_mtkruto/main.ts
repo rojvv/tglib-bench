@@ -32,5 +32,5 @@ dates.push(new Date());
 client.disconnect();
 Deno.writeTextFileSync(
   "results.json",
-  JSON.stringify(dates.map((v) => v.getTime() / 1_000)),
+  JSON.stringify([document.byteLength, dates.map((v) => v.getTime() / 1_000)]),
 );
