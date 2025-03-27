@@ -51,10 +51,7 @@ jobs:
         with:
           node-version: 23.x
           cache: pnpm
-
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 8
+          cache-dependency-path: "**/pnpm-lock.yaml"
 
       - run: |
           cd 02_mtcute/
