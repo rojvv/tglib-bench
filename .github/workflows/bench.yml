@@ -1,0 +1,60 @@
+name: bench
+
+on: workflow_dispatch
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # 00_mtkruto
+  mtkruto:
+    runs-on: ubuntu-latest
+    env:
+      AUTH_STRING: ${{ secrets.AUTH_STRING_00 }}
+      MESSAGE_LINK: ${{ secrets.MESSAGE_LINK }}
+      CHAT_ID: ${{ secrets.CHAT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: denoland/setup-deno@v2
+
+      - run: |
+          cd 00_mtkruto/
+          deno install
+          deno -A main.ts
+
+          cd ../
+          ./_commit.sh
+
+  # 02_mtcute
+  mtcute:
+    runs-on: ubuntu-latest
+    env:
+      API_ID: ${{ secrets.API_ID }}
+      API_HASH: ${{ secrets.API_HASH }}
+      AUTH_STRING: ${{ secrets.AUTH_STRING_02 }}
+      MESSAGE_LINK: ${{ secrets.MESSAGE_LINK }}
+      CHAT_ID: ${{ secrets.CHAT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 23.x
+          cache: pnpm
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 8
+
+      - run: |
+          cd 02_mtcute/
+          pnpm install
+          node main.ts
+
+          cd ../
+          ./_commit.sh
