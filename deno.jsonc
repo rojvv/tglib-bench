@@ -1,5 +1,5 @@
 {
   "fmt": {
-    "exclude": ["**/pnpm-lock.yaml"]
+    "exclude": ["**/pnpm-lock.yaml", "**/results.json"]
   }
 }
