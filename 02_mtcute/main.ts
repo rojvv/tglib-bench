@@ -3,7 +3,11 @@ import { ok } from "node:assert";
 import { InputMedia, TelegramClient } from "@mtcute/node";
 import env from "./env.ts";
 
-const tg = new TelegramClient({ apiId: env.API_ID, apiHash: env.API_HASH });
+const tg = new TelegramClient({
+  apiId: env.API_ID,
+  apiHash: env.API_HASH,
+  logLevel: 4,
+});
 await tg.importSession(env.AUTH_STRING);
 await tg.start();
 
