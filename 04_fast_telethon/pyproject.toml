@@ -1,0 +1,21 @@
+[project]
+name = "03-fast_telethon"
+version = "0.1.0"
+description = ""
+requires-python = ">=3.11"
+dependencies = [
+    "telethon (>=1.39.0,<2.0.0)",
+    "cryptg (>=0.5.0.post0,<0.6.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+package-mode = false
+
+[tool.poetry.group.dev.dependencies]
+mypy = "^1.15.0"
+
