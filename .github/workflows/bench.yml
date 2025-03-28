@@ -12,6 +12,7 @@ on:
           - 01_fasttelethon
           - 02_mtcute
           - 03_telethon
+          - 04_tdlib
         required: true
 
 permissions:
@@ -124,6 +125,33 @@ jobs:
           cd 03_telethon/
           poetry install
           poetry run python main.py
+
+          cd ../
+          ./_commit.sh
+
+  # 04_tdlib
+  tdlib:
+    if: github.event.inputs.library == '04_tdlib' || github.event.inputs.library == 'All'
+    runs-on: ubuntu-latest
+    env:
+      API_ID: ${{ secrets.API_ID }}
+      API_HASH: ${{ secrets.API_HASH }}
+      BOT_TOKEN: ${{ secrets.BOT_TOKEN_04 }}
+      MESSAGE_LINK: ${{ secrets.MESSAGE_LINK }}
+      CHAT_ID: ${{ secrets.CHAT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: denoland/setup-deno@v2
+
+      - uses: actions/cache@v4
+        with:
+          path: 04_tdlib/tdlib
+          key: tdlib
+
+      - run: |
+          cd 04_tdlib/
+          ./main.sh
 
           cd ../
           ./_commit.sh
