@@ -43,7 +43,7 @@ timestamps.append(time.time())
 
 # file_name = message.download_media()
 file_name = "file.xxx"
-download_file(app, message.document, out=open(file_name, 'wb'))
+download_file(app, message.document, out=open(file_name, "wb"))
 
 timestamps.append(time.time())
 
