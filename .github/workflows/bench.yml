@@ -9,6 +9,7 @@ on:
         options:
           - All
           - 00_mtkruto
+          - 01_fasttelethon
           - 02_mtcute
           - 03_telethon
         required: true
@@ -38,6 +39,33 @@ jobs:
           cd 00_mtkruto/
           deno install
           deno -A main.ts
+
+          cd ../
+          ./_commit.sh
+
+  # 01_fasttelethon
+  fasttelethon:
+    if: github.event.inputs.library == '01_fasttelethon' || github.event.inputs.library == 'All'
+    runs-on: ubuntu-latest
+    env:
+      API_ID: ${{ secrets.API_ID }}
+      API_HASH: ${{ secrets.API_HASH }}
+      AUTH_STRING: ${{ secrets.AUTH_STRING_01 }}
+      MESSAGE_LINK: ${{ secrets.MESSAGE_LINK }}
+      CHAT_ID: ${{ secrets.CHAT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - run: python -m pip install poetry
+
+      - run: |
+          cd 01_fasttelethon/
+          poetry install
+          poetry run python main.py
 
           cd ../
           ./_commit.sh
