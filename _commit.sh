@@ -1,5 +1,5 @@
 #!/bin/sh
-git add -A
+git add **/results.json
 git config user.name "github-actions[bot]"
 git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 git commit -m "Update results" || exit 0
