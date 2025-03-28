@@ -1,5 +1,5 @@
-# copied from https://github.com/tulir/mautrix-telegram/blob/master/mautrix_telegram/util/parallel_file_transfer.py
-# Copyright (C) 2021 Tulir Asokan
+# copied from https://gist.github.com/painor/7e74de80ae0c819d3e9abcf9989a8dd6
+
 import asyncio
 import hashlib
 import inspect
