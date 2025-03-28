@@ -17,7 +17,6 @@ jobs:
       AUTH_STRING: ${{ secrets.AUTH_STRING_00 }}
       MESSAGE_LINK: ${{ secrets.MESSAGE_LINK }}
       CHAT_ID: ${{ secrets.CHAT_ID }}
-      LOG_VERBOSITY: 5
     steps:
       - uses: actions/checkout@v4
 
