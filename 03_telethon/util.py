@@ -1,4 +1,3 @@
-
 from urllib.parse import urlparse
 
 def parse_message_link(message_link: str) -> tuple[str | int, int]:
