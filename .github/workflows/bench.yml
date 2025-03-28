@@ -1,6 +1,17 @@
 name: bench
 
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      library:
+        type: choice
+        description: which library/libraries to run
+        options:
+          - All
+          - 00_mtkruto
+          - 02_mtcute
+          - 03_telethon
+        required: true
 
 permissions:
   contents: write
@@ -12,6 +23,7 @@ concurrency:
 jobs:
   # 00_mtkruto
   mtkruto:
+    if: github.event.inputs.library == '00_mtkruto' || github.event.inputs.library == 'All'
     runs-on: ubuntu-latest
     env:
       AUTH_STRING: ${{ secrets.AUTH_STRING_00 }}
@@ -32,6 +44,7 @@ jobs:
 
   # 02_mtcute
   mtcute:
+    if: github.event.inputs.library == '02_mtcute' || github.event.inputs.library == 'All'
     runs-on: ubuntu-latest
     env:
       API_ID: ${{ secrets.API_ID }}
@@ -62,6 +75,7 @@ jobs:
 
   # 03_telethon
   telethon:
+    if: github.event.inputs.library == '03_telethon' || github.event.inputs.library == 'All'
     runs-on: ubuntu-latest
     env:
       API_ID: ${{ secrets.API_ID }}
