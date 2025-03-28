@@ -1,10 +1,11 @@
 import sys
 import time
 import json
+from io import BytesIO
 
-from telethon import __version__  # type: ignore
-from telethon.sessions import MemorySession, StringSession  # type: ignore
-from telethon.sync import TelegramClient  # type: ignore
+from telethon import __version__
+from telethon.sessions import StringSession
+from telethon.sync import TelegramClient
 
 from FastTelethon import download_file, upload_file
 
@@ -39,28 +40,18 @@ if not message.file:
 
 file_size = message.file.size
 
+buffer = BytesIO()
+timestamps.append(time.time())
+_ = download_file(app, message.document, out=buffer)
 timestamps.append(time.time())
 
-# file_name = message.download_media()
-file_name = "file.xxx"
-download_file(app, message.document, out=open(file_name, "wb"))
 
 timestamps.append(time.time())
-
+file_ = upload_file(app, buffer)
 timestamps.append(time.time())
 
-file = upload_file(app, open(file_name, "rb"))
-file.name = file_name
+app.send_file(entity=env.CHAT_ID, file=file_, force_document=True)
 
-app.send_file(entity=env.CHAT_ID, file=file_name, force_document=True)
-
-# app.send_file(
-#     entity=env.CHAT_ID,
-#     file=file_name,
-#     force_document=True,
-# )
-
-timestamps.append(time.time())
 
 app.disconnect()
 
