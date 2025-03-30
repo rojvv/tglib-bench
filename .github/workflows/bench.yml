@@ -13,6 +13,7 @@ on:
           - 02_mtcute
           - 03_telethon
           - 04_tdlib
+          - 05_wtelegramclient
         required: true
 
 permissions:
@@ -152,6 +153,36 @@ jobs:
       - run: |
           cd 04_tdlib/
           ./main.sh
+
+          cd ../
+          ./_commit.sh
+
+  # 05_wtelegramclient
+  wtelegramclient:
+    if: github.event.inputs.library == '05_wtelegramclient' || github.event.inputs.library == 'All'
+    runs-on: ubuntu-latest
+    env:
+      api_id: ${{ secrets.API_ID }}
+      api_hash: ${{ secrets.API_HASH }}
+      bot_token: ${{ secrets.BOT_TOKEN_05 }}
+      MESSAGE_LINK: ${{ secrets.MESSAGE_LINK }}
+      CHAT_ID: ${{ secrets.CHAT_ID }}
+      session_pathname: ./WTelegram.session
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.x"
+
+      - uses: actions/cache@v4
+        with:
+          path: 05_wtelegramclient/WTelegram.session
+          key: wtelegramclient
+
+      - run: |
+          cd 05_wtelegramclient
+          dotnet run
 
           cd ../
           ./_commit.sh
