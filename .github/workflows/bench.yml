@@ -177,10 +177,10 @@ jobs:
         with:
           dotnet-version: "8.x"
 
-      - uses: actions/cache/restore@v4
+      - uses: actions/cache@v4
         with:
           path: 05_wtelegramclient/WTelegram.session
-          key: wtelegramclient
+          key: wtelegramclient-${{ hashFiles('05_wtelegramclient/WTelegram.session') }})
 
       - run: |
           cd 05_wtelegramclient
