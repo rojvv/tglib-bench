@@ -167,8 +167,8 @@ jobs:
       api_id: ${{ secrets.API_ID }}
       api_hash: ${{ secrets.API_HASH }}
       bot_token: ${{ secrets.BOT_TOKEN_05 }}
-      MESSAGE_LINK: ${{ secrets.MESSAGE_LINK }}
-      CHAT_ID: ${{ secrets.CHAT_ID }}
+      message_link: ${{ secrets.MESSAGE_LINK }}
+      chat_id: ${{ secrets.CHAT_ID }}
       session_pathname: WTelegram.session
     steps:
       - uses: actions/checkout@v4
