@@ -1,0 +1,7 @@
+.vs/
+bin/
+obj/
+Debug/
+Release/
+launchSettings.json
+wtc-bench.sln
