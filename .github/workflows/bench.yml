@@ -188,13 +188,3 @@ jobs:
 
           cd ../
           ./_commit.sh
-
-      - run: gh cache delete wtelegramclient
-        env:
-          GH_TOKEN: ${{ github.token }}
-        continue-on-error: true
-
-      - uses: actions/cache/save@v4
-        with:
-          path: 05_wtelegramclient/WTelegram.session
-          key: wtelegramclient
