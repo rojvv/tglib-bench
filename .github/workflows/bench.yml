@@ -161,13 +161,15 @@ jobs:
   wtelegramclient:
     if: github.event.inputs.library == '05_wtelegramclient' || github.event.inputs.library == 'All'
     runs-on: ubuntu-latest
+    permissions:
+      actions: write
     env:
       api_id: ${{ secrets.API_ID }}
       api_hash: ${{ secrets.API_HASH }}
       bot_token: ${{ secrets.BOT_TOKEN_05 }}
       MESSAGE_LINK: ${{ secrets.MESSAGE_LINK }}
       CHAT_ID: ${{ secrets.CHAT_ID }}
-      session_pathname: ./WTelegram.session
+      session_pathname: WTelegram.session
     steps:
       - uses: actions/checkout@v4
 
@@ -175,7 +177,7 @@ jobs:
         with:
           dotnet-version: "8.x"
 
-      - uses: actions/cache@v4
+      - uses: actions/cache/restore@v4
         with:
           path: 05_wtelegramclient/WTelegram.session
           key: wtelegramclient
@@ -186,3 +188,13 @@ jobs:
 
           cd ../
           ./_commit.sh
+
+      - run: gh cache delete wtelegramclient
+        env:
+          GH_TOKEN: ${{ github.token }}
+        continue-on-error: true
+
+      - uses: actions/cache/save@v4
+        with:
+          path: 05_wtelegramclient/WTelegram.session
+          key: wtelegramclient
