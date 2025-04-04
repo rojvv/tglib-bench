@@ -31,7 +31,7 @@ GC.Collect();
 Console.WriteLine($"Uploading document, {stream.Length:N0} bytes");
 var ustart = DateTimeOffset.UtcNow;
 var uploadedFile = await client.UploadFileAsync(stream, "WTelegramClient.bin");
-_ = client.SendMediaAsync(chat, "", uploadedFile, reply_to_msg_id: msg.id);
+_ = client.SendMediaAsync(chat, "", uploadedFile);
 var uend = DateTimeOffset.UtcNow;
 Console.WriteLine($"Upload in {uend - ustart}, speed {document.size / (uend - ustart).TotalSeconds / 1024 / 1024:N2} MB/s");
 
