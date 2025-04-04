@@ -161,8 +161,6 @@ jobs:
   wtelegramclient:
     if: github.event.inputs.library == '05_wtelegramclient' || github.event.inputs.library == 'All'
     runs-on: ubuntu-latest
-    permissions:
-      actions: write
     env:
       api_id: ${{ secrets.API_ID }}
       api_hash: ${{ secrets.API_HASH }}
