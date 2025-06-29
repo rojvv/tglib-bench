@@ -30,7 +30,7 @@ dates.push(new Date());
 await tg.sendMedia(env.CHAT_ID, InputMedia.document(document));
 dates.push(new Date());
 
-await tg.close();
+await tg.destroy();
 writeFileSync(
   "results.json",
   JSON.stringify([document.byteLength, dates.map((v) => v.getTime() / 1_000)]),
