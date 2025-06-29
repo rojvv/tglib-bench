@@ -14,6 +14,7 @@ on:
           - 03_telethon
           - 04_tdlib
           - 05_wtelegramclient
+          - 06_madelineproto
         required: true
 
 permissions:
@@ -183,6 +184,38 @@ jobs:
       - run: |
           cd 05_wtelegramclient
           dotnet run
+
+          cd ../
+          ./_commit.sh
+
+  # 06_madelineproto
+  madelineproto:
+    if: github.event.inputs.library == '06_madelineproto' || github.event.inputs.library == 'All'
+    runs-on: ubuntu-latest
+    env:
+      API_ID: ${{ secrets.API_ID }}
+      API_HASH: ${{ secrets.API_HASH }}
+      BOT_TOKEN: ${{ secrets.BOT_TOKEN_06 }}
+      MESSAGE_LINK: ${{ secrets.MESSAGE_LINK }}
+      CHAT_ID: ${{ secrets.CHAT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: denoland/setup-deno@v2
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+          extensions: uv, jit
+
+      - uses: actions/cache@v4
+        with:
+          path: 06_madelineproto/session.madeline
+          key: madelineproto
+
+      - run: |
+          cd 06_madelineproto/
+          php main.php
 
           cd ../
           ./_commit.sh
