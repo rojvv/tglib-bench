@@ -18,9 +18,9 @@ if (!("document" in message)) {
 const dates = new Array<Date>();
 dates.push(new Date());
 
-const chunks = new Array<Uint8Array>();
+const chunks = new Array<Uint8Array<ArrayBuffer>>();
 for await (const chunk of client.download(message.document.fileId)) {
-  chunks.push(chunk);
+  chunks.push(chunk as Uint8Array<ArrayBuffer>);
 }
 dates.push(new Date());
 

@@ -1,7 +1,7 @@
 {
   "type": "module",
   "dependencies": {
-    "@mtcute/node": "^0.24.3",
+    "@mtcute/node": "^0.26.1",
     "envalid": "^8.0.0"
   },
   "devDependencies": {

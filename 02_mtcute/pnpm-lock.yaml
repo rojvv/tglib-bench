@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@mtcute/node':
-        specifier: ^0.24.3
-        version: 0.24.3
+        specifier: ^0.26.1
+        version: 0.26.1
       envalid:
         specifier: ^8.0.0
         version: 8.0.0
@@ -38,26 +38,26 @@ packages:
   '@fuman/utils@0.0.15':
     resolution: {integrity: sha512-3H3WzkfG7iLKCa/yNV4s80lYD4yr5hgiNzU13ysLY2BcDqFjM08XGYuLd5wFVp4V8+DA/fe8gIDW96To/JwDyA==}
 
-  '@mtcute/core@0.24.4':
-    resolution: {integrity: sha512-4dQ1MhY1DmEUqpOLyssgv9WljDr/itpUTVanTg6pZsraU6Z+ohH4E3V2UOQcfmWCQbecmMZL7UeLlScfw0oDXQ==}
+  '@mtcute/core@0.26.1':
+    resolution: {integrity: sha512-np/CD41K0jHgHaM+BzAjVTG5pUCpcIxiMLGCeALeT2/EC4XLafXcZ84fVZP/IjvbBWL6Rmw8Cj9A+hLZBP58wg==}
 
   '@mtcute/file-id@0.24.3':
     resolution: {integrity: sha512-E00JsYonLZ2z5pzfbfmAuIz3+Fn60xliOn8SCRk6Qhht4aMWbJAkehkqhsmlWsM4C64hQvW8IHqinl9LVJyOLA==}
 
-  '@mtcute/html-parser@0.24.0':
-    resolution: {integrity: sha512-TFJ9An/jI95YH+wxxCsgE1wEdGrNj15Dx1SWPzHOnzlBqL/kjO9UrPEFdIoeOK6BBoejRNVkQgwnoqBiJCIaOA==}
+  '@mtcute/html-parser@0.26.1':
+    resolution: {integrity: sha512-EQW1KN8WcYQBhBdaEJyVWH5SVralZdVwkibyaEq0mSc6yrqhhdnLsdTo4cgmGgp5Xb4xOgNcKYFSA5d5QPyl6Q==}
 
-  '@mtcute/markdown-parser@0.24.0':
-    resolution: {integrity: sha512-j+SeBp/6uTpqIB/GMrrPT9l97xmaRKZIb3mrTNt9Y6M9BS8gYqDkqlmMbhrT6flyU6/TNpyJ5YaGMIQt0OssQw==}
+  '@mtcute/markdown-parser@0.26.1':
+    resolution: {integrity: sha512-Gh1JTGAjVMcxc8xJj5uogezibZQu2EL63GRLArYIg9iMmVqYKbvzL4a3Wlu6bWW5djEyUbLd1TkQT9HEqjtIlA==}
 
-  '@mtcute/node@0.24.3':
-    resolution: {integrity: sha512-vWbwlUT1OSvXgs6ATYxd6Qt8It1ltyQlPV9kqD5PU+mwyNnwt7arcQk0F0HpsF4P4IW9nuHD+MWE4DHUdh+qQQ==}
+  '@mtcute/node@0.26.1':
+    resolution: {integrity: sha512-yLulMVuF8da7XdGWlsmS3cVyCnpep+g3KGqWgVSI0r3g/tctyFmNwmcAfiHVkLcqUVxB+h0p9cpNRAtvqvPf9g==}
 
   '@mtcute/tl-runtime@0.24.3':
     resolution: {integrity: sha512-61J3cgYgNOQT532GdIiuezRrSC7v6cc9MfvWv9GO27bRGf7JUKWVbFt4U0KzQ9Tp0J1uMOUfi1EbQKkYKacIKQ==}
 
-  '@mtcute/tl@204.0.0':
-    resolution: {integrity: sha512-ldWqKJ60BX2VKPE3DwjXpP8pdlEJ4yiHHVfSdielTYTItBM++PNqTO5y6dS2iZMcsk7xFrnGWmtaWd74L+VNRw==}
+  '@mtcute/tl@214.0.0':
+    resolution: {integrity: sha512-0dk5hL9eOHtpNPMIRBYVnPpSdMfDukQXP9y7ia81duT+ePFp29Ez5dyFP8UuHTaRYZzSb6uOLgOjiWehgPundA==}
 
   '@mtcute/wasm@0.24.3':
     resolution: {integrity: sha512-6kI9r+g/4P6Dg6A1K1O0DC6KLIQp/ABeOxSWzBfH3YM2HR6Vc8RO/M0/6Ij7GwCvELNGAz9AWj/Qk8vM8c0ATg==}
@@ -252,13 +252,13 @@ snapshots:
 
   '@fuman/utils@0.0.15': {}
 
-  '@mtcute/core@0.24.4':
+  '@mtcute/core@0.26.1':
     dependencies:
       '@fuman/io': 0.0.15
       '@fuman/net': 0.0.15
       '@fuman/utils': 0.0.15
       '@mtcute/file-id': 0.24.3
-      '@mtcute/tl': 204.0.0
+      '@mtcute/tl': 214.0.0
       '@mtcute/tl-runtime': 0.24.3
       '@types/events': 3.0.0
       long: 5.2.3
@@ -269,25 +269,25 @@ snapshots:
       '@mtcute/tl-runtime': 0.24.3
       long: 5.2.3
 
-  '@mtcute/html-parser@0.24.0':
+  '@mtcute/html-parser@0.26.1':
     dependencies:
-      '@mtcute/core': 0.24.4
+      '@mtcute/core': 0.26.1
       htmlparser2: 10.0.0
       long: 5.2.3
 
-  '@mtcute/markdown-parser@0.24.0':
+  '@mtcute/markdown-parser@0.26.1':
     dependencies:
-      '@mtcute/core': 0.24.4
+      '@mtcute/core': 0.26.1
       long: 5.2.3
 
-  '@mtcute/node@0.24.3':
+  '@mtcute/node@0.26.1':
     dependencies:
       '@fuman/net': 0.0.15
       '@fuman/node': 0.0.15
       '@fuman/utils': 0.0.15
-      '@mtcute/core': 0.24.4
-      '@mtcute/html-parser': 0.24.0
-      '@mtcute/markdown-parser': 0.24.0
+      '@mtcute/core': 0.26.1
+      '@mtcute/html-parser': 0.26.1
+      '@mtcute/markdown-parser': 0.26.1
       '@mtcute/wasm': 0.24.3
       better-sqlite3: 11.3.0
     transitivePeerDependencies:
@@ -298,7 +298,7 @@ snapshots:
       '@fuman/utils': 0.0.15
       long: 5.2.3
 
-  '@mtcute/tl@204.0.0':
+  '@mtcute/tl@214.0.0':
     dependencies:
       long: 5.2.3
 
