@@ -29,12 +29,12 @@ async def main():
     message = await app.get_messages(chat_id=chat_id, message_ids=message_id)
     if not message:
         print("Message not found.", file=sys.stderr)
-        await app.stop()
+        await app.disconnect()
         sys.exit(1)
 
     if not message.document:
         print("Invalid message.", file=sys.stderr)
-        await app.stop()
+        await app.disconnect()
         sys.exit(1)
 
     file_size = message.document.file_size
