@@ -248,5 +248,3 @@ jobs:
 
           cd ../
           ./_commit.sh
-
- 
