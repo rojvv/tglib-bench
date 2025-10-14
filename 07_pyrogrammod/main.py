@@ -19,8 +19,8 @@ app.connect()
 
 if env.EXPORT_AUTH_STRING:
     app.sign_in_bot(bot_token=env.BOT_TOKEN)
+    print(app.export_session_string())
     exit(0)
-
 
 async def main():
     chat_id, message_id = parse_message_link(env.MESSAGE_LINK)
