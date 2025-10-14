@@ -3,7 +3,7 @@
     "dev": "deno run --watch main.ts"
   },
   "imports": {
-    "@mtkruto/mtkruto": "jsr:@mtkruto/mtkruto@^0.71.0",
+    "@mtkruto/mtkruto": "jsr:@mtkruto/mtkruto@^0.72.1",
     "@std/assert": "jsr:@std/assert@1",
     "envalid": "npm:envalid@^8.0.0"
   }
