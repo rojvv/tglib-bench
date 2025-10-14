@@ -9,17 +9,21 @@ import env
 from util import parse_message_link
 
 app = Client(
-    "session_user",
+    ":memory:",
+    session_string=env.AUTH_STRING if env.AUTH_STRING else None,
     api_id=env.API_ID,
     api_hash=env.API_HASH,
-    bot_token=env.BOT_TOKEN,
     no_updates=True,
 )
+app.connect()
+
+if env.EXPORT_AUTH_STRING:
+    app.sign_in_bot(bot_token=env.BOT_TOKEN)
+    print(app.session.save())
+    exit(0)
 
 
 async def main():
-    await app.start()
-
     chat_id, message_id = parse_message_link(env.MESSAGE_LINK)
 
     timestamps: list[float] = []
@@ -53,6 +57,8 @@ async def main():
 
     with open("results.json", "w+") as f:
         json.dump([file_size, timestamps, __version__], f)
+
+    await app.disconnect()
 
 
 if __name__ == "__main__":
