@@ -19,7 +19,6 @@ app.connect()
 
 if env.EXPORT_AUTH_STRING:
     app.sign_in_bot(bot_token=env.BOT_TOKEN)
-    print(app.session.save())
     exit(0)
 
 
