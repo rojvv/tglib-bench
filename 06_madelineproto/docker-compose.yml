@@ -1,0 +1,6 @@
+services:
+  main.php:
+    build: .
+    volumes:
+      - ./:/src
+    env_file: .env

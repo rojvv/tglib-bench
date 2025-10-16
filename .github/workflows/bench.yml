@@ -204,11 +204,6 @@ jobs:
 
       - uses: denoland/setup-deno@v2
 
-      - uses: shivammathur/setup-php@v2
-        with:
-          php-version: 8.2
-          extensions: uv, jit
-
       - uses: actions/cache@v4
         with:
           path: 06_madelineproto/session.madeline
@@ -216,7 +211,13 @@ jobs:
 
       - run: |
           cd 06_madelineproto/
-          php main.php
+          echo "API_ID=$API_ID
+          API_HASH=$API_HASH
+          BOT_TOKEN=$BOT_TOKEN
+          MESSAGE_LINK=$MESSAGE_LINK
+          CHAT_ID=$CHAT_ID" > .env
+          cat .env
+          docker compose up
 
           cd ../
           ./_commit.sh
