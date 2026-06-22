@@ -29,8 +29,9 @@ dates.push(new Date());
 await client.sendDocument(env.CHAT_ID, document);
 dates.push(new Date());
 
-client.disconnect();
+await client.disconnect();
 Deno.writeTextFileSync(
   "results.json",
   JSON.stringify([document.byteLength, dates.map((v) => v.getTime() / 1_000)]),
 );
+Deno.exit(0)
