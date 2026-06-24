@@ -260,7 +260,6 @@ jobs:
       API_HASH: ${{ secrets.API_HASH }}
       AUTH_STRING: ${{ secrets.AUTH_STRING_08 }}
       MESSAGE_LINK: ${{ secrets.MESSAGE_LINK }}
-      CHAT_ID: ${{ secrets.CHAT_ID }}
     steps:
       - uses: actions/checkout@v4
 

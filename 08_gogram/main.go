@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -56,20 +57,18 @@ func main() {
 	}
 
 	timestamps := make([]float64, 0, 4)
+	buf := bytes.NewBuffer(make([]byte, 0, doc.Size))
 
 	timestamps = append(timestamps, now())
-	path, err := message.Download(&telegram.DownloadOptions{
-		FileName: "downloaded.bin",
-	})
-	timestamps = append(timestamps, now())
-	if err != nil {
+	if _, err := message.Download(&telegram.DownloadOptions{Buffer: buf}); err != nil {
 		fmt.Fprintln(os.Stderr, "Download:", err)
 		os.Exit(1)
 	}
+	timestamps = append(timestamps, now())
 
 	timestamps = append(timestamps, now())
-	if _, err := client.SendMedia(cfg.chatID, path); err != nil {
-		fmt.Fprintln(os.Stderr, "SendMedia:", err)
+	if _, err := client.UploadFile(buf.Bytes(), &telegram.UploadOptions{FileName: "gogram.bin"}); err != nil {
+		fmt.Fprintln(os.Stderr, "UploadFile:", err)
 		os.Exit(1)
 	}
 	timestamps = append(timestamps, now())
@@ -95,7 +94,6 @@ type env struct {
 	apiHash     string
 	authString  string
 	messageLink string
-	chatID      int64
 }
 
 func loadEnv() (*env, error) {
@@ -119,20 +117,11 @@ func loadEnv() (*env, error) {
 	if messageLink == "" {
 		return nil, errors.New("MESSAGE_LINK not set")
 	}
-	chatIDStr := os.Getenv("CHAT_ID")
-	if chatIDStr == "" {
-		return nil, errors.New("CHAT_ID not set")
-	}
-	chatID, err := strconv.ParseInt(chatIDStr, 10, 64)
-	if err != nil {
-		return nil, fmt.Errorf("invalid CHAT_ID: %w", err)
-	}
 	return &env{
 		apiID:       int32(apiID64),
 		apiHash:     apiHash,
 		authString:  authString,
 		messageLink: messageLink,
-		chatID:      chatID,
 	}, nil
 }
 
