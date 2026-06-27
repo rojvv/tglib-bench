@@ -25,12 +25,14 @@ func main() {
 		os.Exit(1)
 	}
 
-	ctx := context.Background()
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Minute)
+	defer cancel()
 
 	client, err := telegram.NewClient(cfg.apiID, cfg.apiHash, &telegram.Config{
 		SessionString: cfg.authString,
 		InMemory:      true,
 		SavePeers:     true,
+		Retries:       5,
 	})
 	if err != nil {
 		fmt.Fprintln(os.Stderr, "NewClient:", err)
