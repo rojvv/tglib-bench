@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bytes"
 	"context"
 	"encoding/json"
 	"errors"
@@ -14,6 +13,7 @@ import (
 	"time"
 
 	"github.com/mtgo-labs/mtgo/telegram"
+	"github.com/mtgo-labs/mtgo/telegram/params"
 	"github.com/mtgo-labs/mtgo/telegram/types"
 	"github.com/mtgo-labs/mtgo/tg"
 )
@@ -27,12 +27,14 @@ func main() {
 
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Minute)
 	defer cancel()
-
 	client, err := telegram.NewClient(cfg.apiID, cfg.apiHash, &telegram.Config{
 		SessionString: cfg.authString,
 		InMemory:      true,
 		SavePeers:     true,
+		AutoConnect:   true,
+		NoUpdates:     true,
 		Retries:       5,
+		Log:           telegram.LogConfig{Level: telegram.NoLevel},
 	})
 	if err != nil {
 		fmt.Fprintln(os.Stderr, "NewClient:", err)
@@ -48,6 +50,12 @@ func main() {
 	chatID, msgID, err := resolveMessageLink(ctx, client, cfg.messageLink)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, "resolve link:", err)
+		os.Exit(1)
+	}
+
+	_, err = client.ResolvePeer(ctx, cfg.chatID)
+	if err != nil {
+		fmt.Fprintln(os.Stderr, "Resolve target chat:", err)
 		os.Exit(1)
 	}
 
@@ -70,7 +78,24 @@ func main() {
 	var ts [4]float64
 
 	ts[0] = now()
-	data, err := client.DownloadMedia(ctx, msgs[0].Media, "", nil)
+	tmp, err := os.CreateTemp("", "mtgo-bench-*")
+	if err != nil {
+		fmt.Fprintln(os.Stderr, "CreateTemp:", err)
+		os.Exit(1)
+	}
+	tmpPath := tmp.Name()
+	_ = tmp.Close()
+	defer os.Remove(tmpPath)
+
+	err = client.DownloadMediaToFile(ctx, msgs[0].Media, "", tmpPath, doc.FileSize, &params.Download{
+		ChunkSize: 512 * 1024,
+		Workers:   6,
+		Progress: func(info params.ProgressInfo) {
+			if info.DownloadedBytes%(50*1024*1024) < int64(512*1024) {
+				fmt.Printf("[PROGRESS-DL] %d / %d bytes (%.1f%%)\n", info.DownloadedBytes, info.TotalBytes, info.Progress())
+			}
+		},
+	})
 	if err != nil {
 		fmt.Fprintln(os.Stderr, "DownloadMedia:", err)
 		os.Exit(1)
@@ -78,7 +103,24 @@ func main() {
 	ts[1] = now()
 
 	ts[2] = now()
-	result, err := client.UploadFile(ctx, bytes.NewReader(data), "mtgo.bin", int64(len(data)), nil)
+	f, err := os.Open(tmpPath)
+	if err != nil {
+		fmt.Fprintln(os.Stderr, "Open downloaded file:", err)
+		os.Exit(1)
+	}
+
+	uploadCtx, uploadCancel := context.WithTimeout(context.Background(), 30*time.Minute)
+	defer uploadCancel()
+	result, err := client.UploadFile(uploadCtx, f, "mtgo.bin", doc.FileSize, &telegram.UploadOptions{
+		Workers: 8,
+		Progress: func(info params.ProgressInfo) {
+			if info.UploadedBytes%(50*1024*1024) < int64(512*1024) {
+				fmt.Printf("[PROGRESS-UL] %d / %d bytes (%.1f%%)\n", info.UploadedBytes, info.TotalBytes, info.Progress())
+			}
+		},
+	})
+	f.Close()
+	os.Remove(tmpPath)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, "UploadFile:", err)
 		os.Exit(1)
