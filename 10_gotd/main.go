@@ -118,14 +118,24 @@ func runBenchmark(ctx context.Context, client *telegram.Client, cfg *env) error 
 
 	uploadCtx, uploadCancel := context.WithTimeout(ctx, 30*time.Minute)
 	defer uploadCancel()
-	upload, err := uploader.NewUploader(api).
+
+	uploadPool, err := client.Pool(8)
+	if err != nil {
+		_ = f.Close()
+		return fmt.Errorf("create upload pool: %w", err)
+	}
+	upload, err := uploader.NewUploader(tg.NewClient(uploadPool)).
 		WithThreads(8).
 		WithProgress(progressLogger{prefix: "[PROGRESS-UL]"}).
 		Upload(uploadCtx, uploader.NewUpload("gotd.bin", f, doc.Size))
+	poolCloseErr := uploadPool.Close()
 	closeErr := f.Close()
 	os.Remove(tmpPath)
 	if err != nil {
 		return fmt.Errorf("UploadFile: %w", err)
+	}
+	if poolCloseErr != nil && !errors.Is(poolCloseErr, context.Canceled) {
+		return fmt.Errorf("Close upload pool: %w", poolCloseErr)
 	}
 	if closeErr != nil {
 		return fmt.Errorf("Close downloaded file: %w", closeErr)
