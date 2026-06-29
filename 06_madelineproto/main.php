@@ -165,11 +165,23 @@ function uploadFile(API $api, string|int $chatId, string $filePath): array {
     return [$startTime, $endTime];
 }
 
+function resolveUploadPeer(API $api, int $chatId): int {
+    if (!$api->peerIsset($chatId)) {
+        $api->getDialogIds();
+    }
+    if (!$api->peerIsset($chatId)) {
+        throw new RuntimeException(
+            "CHAT_ID is not present in MadelineProto's peer database; make sure the bot is a member of that chat and has received an update from it, or use a cached session that already knows the peer."
+        );
+    }
+    return $chatId;
+}
+
 list($chatId, $messageId) = getMessageDetails($messageLink);
 $fileMI = downloadFile($api, $chatId, $messageId);
 $filePath = $fileMI["file"];
 unset($fileMI["file"]);
-$uploadTimestamps = uploadFile($api, $CHAT_ID, $filePath);
+$uploadTimestamps = uploadFile($api, resolveUploadPeer($api, $CHAT_ID), $filePath);
 
 $j = [
     $fileMI['file_size'],
