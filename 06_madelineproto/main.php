@@ -35,7 +35,9 @@ if (file_exists(__DIR__ . "/vendor/autoload.php")) {
     include "madeline.php";
 }
 
+use danog\MadelineProto\AbstractAPI;
 use danog\MadelineProto\API;
+use danog\MadelineProto\EventHandler;
 use danog\MadelineProto\EventHandler\Message;
 use danog\MadelineProto\LocalFile;
 use Webmozart\Assert\Assert;
@@ -97,11 +99,6 @@ $settings->getAppInfo()
     ->setApiId($API_ID)
     ->setApiHash($API_HASH);
 
-$api = new \danog\MadelineProto\API('session.madeline', $settings);
-$api->botLogin($BOT_TOKEN);
-$api->start();
-$api->fullGetSelf();
-
 function getMessageDetails(string $messageLink): array {
     $path = parse_url($messageLink, PHP_URL_PATH);
     if (!is_string($path)) {
@@ -129,7 +126,7 @@ function getMessageDetails(string $messageLink): array {
     return [$chatId, $messageId];
 }
 
-function downloadFile(API $api, string|int $chatId, int $messageId): array {
+function downloadFile(AbstractAPI $api, string|int $chatId, int $messageId): array {
     $message = $api->wrapMessage($api->channels->getMessages([
         'channel' => $chatId,
         'id' => [$messageId]
@@ -150,7 +147,7 @@ function downloadFile(API $api, string|int $chatId, int $messageId): array {
     ];
 }
 
-function uploadFile(API $api, string|int $chatId, string $filePath): array {
+function uploadFile(AbstractAPI $api, string|int $chatId, string $filePath): array {
     $startTime = microtime(true);
     $api->sendDocument(
         peer: $chatId,
@@ -164,21 +161,33 @@ function uploadFile(API $api, string|int $chatId, string $filePath): array {
     return [$startTime, $endTime];
 }
 
-list($chatId, $messageId) = getMessageDetails($messageLink);
-$fileMI = downloadFile($api, $chatId, $messageId);
-$filePath = $fileMI["file"];
-unset($fileMI["file"]);
-$uploadTimestamps = uploadFile($api, $CHAT_ID, $filePath);
+final class Benchmark extends EventHandler {
+    public function onStart(): void {
+        global $messageLink, $CHAT_ID;
 
-$j = [
-    $fileMI['file_size'],
-    [
-        $fileMI['timestamps'][0],
-        $fileMI['timestamps'][1],
-        $uploadTimestamps[0],
-        $uploadTimestamps[1],
-    ],
-    API::RELEASE,
-];
-file_put_contents("results.json", json_encode($j));
+        try {
+            list($chatId, $messageId) = getMessageDetails($messageLink);
+            $fileMI = downloadFile($this, $chatId, $messageId);
+            $filePath = $fileMI["file"];
+            unset($fileMI["file"]);
+            $uploadTimestamps = uploadFile($this, $CHAT_ID, $filePath);
+
+            $j = [
+                $fileMI['file_size'],
+                [
+                    $fileMI['timestamps'][0],
+                    $fileMI['timestamps'][1],
+                    $uploadTimestamps[0],
+                    $uploadTimestamps[1],
+                ],
+                API::RELEASE,
+            ];
+            file_put_contents("results.json", json_encode($j));
+        } finally {
+            $this->stop();
+        }
+    }
+}
+
+Benchmark::startAndLoopBot('session.madeline', $BOT_TOKEN, $settings);
 ?>
