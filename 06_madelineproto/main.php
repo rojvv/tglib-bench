@@ -40,6 +40,10 @@ use danog\MadelineProto\EventHandler\Message;
 use danog\MadelineProto\LocalFile;
 use Webmozart\Assert\Assert;
 
+// This is a short-lived benchmark process. Force a full instance so uploads do
+// not stream local file chunks through MadelineProto's callback IPC daemon.
+$_GET['MadelineSelfRestart'] = $_GET['MadelineSelfRestart'] ?? '1';
+
 Assert::true(extension_loaded('uv'), "The uv extension is required for maximum performance");
 Assert::true(opcache_get_status(false)['jit']['enabled'], "JIT is required for maximum performance");
 
@@ -153,11 +157,25 @@ function downloadFile(API $api, string|int $chatId, int $messageId): array {
 
 function uploadFile(API $api, string|int $chatId, string $filePath): array {
     $startTime = microtime(true);
+    $lastProgressLog = 0.0;
+    echo "Starting upload...\n";
     $api->sendDocument(
         peer: $chatId,
         file: new LocalFile($filePath),
         fileName: "MadelineProto.zip",
-        caption: 'Powered by @MadelineProto!'
+        mimeType: 'application/zip',
+        caption: 'Powered by @MadelineProto!',
+        callback: static function (float $percent, float $speed, float $time) use (&$lastProgressLog): void {
+            if ($percent >= 100 || $time - $lastProgressLog >= 10) {
+                $lastProgressLog = $time;
+                echo sprintf(
+                    "Upload progress %.2f%% at %.2f mbps after %.2f seconds.\n",
+                    $percent,
+                    $speed,
+                    $time
+                );
+            }
+        }
     );
     $endTime = microtime(true);
     unlink($filePath);
@@ -194,4 +212,4 @@ $j = [
     API::RELEASE,
 ];
 file_put_contents("results.json", json_encode($j));
-?>
+exit(0);

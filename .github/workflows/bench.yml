@@ -219,8 +219,7 @@ jobs:
           BOT_TOKEN=$BOT_TOKEN
           MESSAGE_LINK=$MESSAGE_LINK
           CHAT_ID=$CHAT_ID" > .env
-          cat .env
-          docker compose up
+          docker compose up --abort-on-container-exit --exit-code-from main.php
 
           cd ../
           ./_commit.sh
