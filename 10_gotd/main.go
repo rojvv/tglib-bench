@@ -30,8 +30,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Minute)
-	defer cancel()
+	ctx := context.Background()
 
 	storage, err := sessionStorage(ctx, cfg.authString)
 	if err != nil {
@@ -44,104 +43,127 @@ func main() {
 		NoUpdates:      true,
 	})
 
+	var runErr error
 	err = client.Run(ctx, func(ctx context.Context) error {
-		api := client.API()
-		peerManager := peers.Options{
-			Storage: &peers.InmemoryStorage{},
-			Cache:   &peers.InmemoryCache{},
-		}.Build(api)
-
-		status, err := client.Auth().Status(ctx)
-		if err != nil {
-			return fmt.Errorf("auth status: %w", err)
-		}
-		if !status.Authorized {
-			return errors.New("AUTH_STRING is not authorized")
-		}
-		if err := peerManager.Apply(ctx, []tg.UserClass{status.User}, nil); err != nil {
-			return fmt.Errorf("cache self: %w", err)
-		}
-
-		_, doc, err := getLinkedDocument(ctx, api, peerManager, cfg.messageLink)
-		if err != nil {
-			return err
-		}
-
-		var ts [4]float64
-
-		ts[0] = now()
-		tmp, err := os.CreateTemp("", "gotd-bench-*")
-		if err != nil {
-			return fmt.Errorf("CreateTemp: %w", err)
-		}
-		tmpPath := tmp.Name()
-		defer os.Remove(tmpPath)
-
-		location := doc.AsInputDocumentFileLocation("")
-		if _, err := client.Download(location).WithThreads(6).Parallel(ctx, newProgressWriterAt(tmp, doc.Size, "[PROGRESS-DL]")); err != nil {
-			_ = tmp.Close()
-			return fmt.Errorf("Download: %w", err)
-		}
-		if err := tmp.Close(); err != nil {
-			return fmt.Errorf("Close downloaded file: %w", err)
-		}
-		ts[1] = now()
-
-		ts[2] = now()
-		f, err := os.Open(tmpPath)
-		if err != nil {
-			return fmt.Errorf("Open downloaded file: %w", err)
-		}
-
-		upload, err := uploader.NewUploader(api).
-			WithThreads(8).
-			WithProgress(progressLogger{prefix: "[PROGRESS-UL]"}).
-			Upload(ctx, uploader.NewUpload("gotd.bin", f, doc.Size))
-		closeErr := f.Close()
-		os.Remove(tmpPath)
-		if err != nil {
-			return fmt.Errorf("UploadFile: %w", err)
-		}
-		if closeErr != nil {
-			return fmt.Errorf("Close downloaded file: %w", closeErr)
-		}
-		ts[3] = now()
-
-		target, err := resolveInputPeer(ctx, api, peerManager, cfg.chatID)
-		if err != nil {
-			return fmt.Errorf("resolve CHAT_ID: %w", err)
-		}
-		randomID, err := client.RandInt64()
-		if err != nil {
-			return fmt.Errorf("random id: %w", err)
-		}
-
-		if _, err := api.MessagesSendMedia(ctx, &tg.MessagesSendMediaRequest{
-			Peer: target,
-			Media: &tg.InputMediaUploadedDocument{
-				File:       upload,
-				ForceFile:  true,
-				MimeType:   firstNonEmpty(doc.MimeType, "application/octet-stream"),
-				Attributes: []tg.DocumentAttributeClass{&tg.DocumentAttributeFilename{FileName: "gotd.bin"}},
-			},
-			RandomID: randomID,
-		}); err != nil {
-			return fmt.Errorf("MessagesSendMedia: %w", err)
-		}
-
-		out, err := json.Marshal([3]any{doc.Size, ts[:], gotdVersion()})
-		if err != nil {
-			return fmt.Errorf("json marshal: %w", err)
-		}
-		if err := os.WriteFile("results.json", out, 0o644); err != nil {
-			return fmt.Errorf("write results: %w", err)
-		}
-		return nil
+		runErr = runBenchmark(ctx, client, cfg)
+		return runErr
 	})
+	if err == nil {
+		err = runErr
+	}
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
+}
+
+func runBenchmark(ctx context.Context, client *telegram.Client, cfg *env) error {
+	api := client.API()
+	peerManager := peers.Options{
+		Storage: &peers.InmemoryStorage{},
+		Cache:   &peers.InmemoryCache{},
+	}.Build(api)
+
+	setupCtx, setupCancel := context.WithTimeout(ctx, 30*time.Minute)
+	defer setupCancel()
+
+	status, err := client.Auth().Status(setupCtx)
+	if err != nil {
+		return fmt.Errorf("auth status: %w", err)
+	}
+	if !status.Authorized {
+		return errors.New("AUTH_STRING is not authorized")
+	}
+	if err := peerManager.Apply(setupCtx, []tg.UserClass{status.User}, nil); err != nil {
+		return fmt.Errorf("cache self: %w", err)
+	}
+
+	_, doc, err := getLinkedDocument(setupCtx, api, peerManager, cfg.messageLink)
+	if err != nil {
+		return err
+	}
+
+	var ts [4]float64
+
+	ts[0] = now()
+	tmp, err := os.CreateTemp("", "gotd-bench-*")
+	if err != nil {
+		return fmt.Errorf("CreateTemp: %w", err)
+	}
+	tmpPath := tmp.Name()
+	defer os.Remove(tmpPath)
+
+	location := doc.AsInputDocumentFileLocation("")
+	downloadCtx, downloadCancel := context.WithTimeout(ctx, 30*time.Minute)
+	defer downloadCancel()
+	if _, err := client.Download(location).WithThreads(6).Parallel(downloadCtx, newProgressWriterAt(tmp, doc.Size, "[PROGRESS-DL]")); err != nil {
+		_ = tmp.Close()
+		return fmt.Errorf("Download: %w", err)
+	}
+	if err := tmp.Close(); err != nil {
+		return fmt.Errorf("Close downloaded file: %w", err)
+	}
+	ts[1] = now()
+
+	ts[2] = now()
+	if stat, err := os.Stat(tmpPath); err != nil {
+		return fmt.Errorf("Stat downloaded file: %w", err)
+	} else if stat.Size() != doc.Size {
+		return fmt.Errorf("downloaded file size mismatch: got %d bytes, want %d", stat.Size(), doc.Size)
+	}
+	f, err := os.Open(tmpPath)
+	if err != nil {
+		return fmt.Errorf("Open downloaded file: %w", err)
+	}
+
+	uploadCtx, uploadCancel := context.WithTimeout(ctx, 30*time.Minute)
+	defer uploadCancel()
+	upload, err := uploader.NewUploader(api).
+		WithThreads(8).
+		WithProgress(progressLogger{prefix: "[PROGRESS-UL]"}).
+		Upload(uploadCtx, uploader.NewUpload("gotd.bin", f, doc.Size))
+	closeErr := f.Close()
+	os.Remove(tmpPath)
+	if err != nil {
+		return fmt.Errorf("UploadFile: %w", err)
+	}
+	if closeErr != nil {
+		return fmt.Errorf("Close downloaded file: %w", closeErr)
+	}
+	ts[3] = now()
+
+	sendCtx, sendCancel := context.WithTimeout(ctx, 30*time.Minute)
+	defer sendCancel()
+	target, err := resolveInputPeer(sendCtx, api, peerManager, cfg.chatID)
+	if err != nil {
+		return fmt.Errorf("resolve CHAT_ID: %w", err)
+	}
+	randomID, err := client.RandInt64()
+	if err != nil {
+		return fmt.Errorf("random id: %w", err)
+	}
+
+	if _, err := api.MessagesSendMedia(sendCtx, &tg.MessagesSendMediaRequest{
+		Peer: target,
+		Media: &tg.InputMediaUploadedDocument{
+			File:       upload,
+			ForceFile:  true,
+			MimeType:   firstNonEmpty(doc.MimeType, "application/octet-stream"),
+			Attributes: []tg.DocumentAttributeClass{&tg.DocumentAttributeFilename{FileName: "gotd.bin"}},
+		},
+		RandomID: randomID,
+	}); err != nil {
+		return fmt.Errorf("MessagesSendMedia: %w", err)
+	}
+
+	out, err := json.Marshal([3]any{doc.Size, ts[:], gotdVersion()})
+	if err != nil {
+		return fmt.Errorf("json marshal: %w", err)
+	}
+	if err := os.WriteFile("results.json", out, 0o644); err != nil {
+		return fmt.Errorf("write results: %w", err)
+	}
+	return nil
 }
 
 func sessionStorage(ctx context.Context, authString string) (*session.StorageMemory, error) {
