@@ -18,6 +18,7 @@ on:
           - 07_pyrogrammod
           - 08_gogram
           - 09_mtgo
+          - 10_gotd
         required: true
 
 permissions:
@@ -297,6 +298,31 @@ jobs:
 
       - run: |
           cd 09_mtgo/
+          go run .
+
+          cd ../
+          ./_commit.sh
+
+  # 10_gotd
+  gotd:
+    if: github.event.inputs.library == '10_gotd' || github.event.inputs.library == 'All'
+    runs-on: ubuntu-latest
+    env:
+      API_ID: ${{ secrets.API_ID }}
+      API_HASH: ${{ secrets.API_HASH }}
+      AUTH_STRING: ${{ secrets.AUTH_STRING_10 }}
+      MESSAGE_LINK: ${{ secrets.MESSAGE_LINK }}
+      CHAT_ID: ${{ secrets.CHAT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.26"
+          cache-dependency-path: 10_gotd/go.sum
+
+      - run: |
+          cd 10_gotd/
           go run .
 
           cd ../
