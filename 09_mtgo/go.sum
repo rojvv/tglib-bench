@@ -4,6 +4,8 @@ github.com/mtgo-labs/mtgo v0.10.2 h1:DR3InKR4g5ttSNMh+bgoRxtvBbGfnakd3JNzSfWXaIY
 github.com/mtgo-labs/mtgo v0.10.2/go.mod h1:S7NWS71niPpXfDJiH9HsPM5ST3wcKusdeJCv6tveVR8=
 github.com/mtgo-labs/mtgo v0.10.3-0.20260628194231-bcf260d52967 h1:u1UB/Rw/Bhb6e2lZUT/VgygYpyHaYFkFLpu1vqRBX8c=
 github.com/mtgo-labs/mtgo v0.10.3-0.20260628194231-bcf260d52967/go.mod h1:S7NWS71niPpXfDJiH9HsPM5ST3wcKusdeJCv6tveVR8=
+github.com/mtgo-labs/mtgo v0.10.3-0.20260629121906-4e5e4a052c34 h1:O/h9WI+q5pTt51JY+phST5u2jbyTut5juHy/JGDr9dw=
+github.com/mtgo-labs/mtgo v0.10.3-0.20260629121906-4e5e4a052c34/go.mod h1:S7NWS71niPpXfDJiH9HsPM5ST3wcKusdeJCv6tveVR8=
 github.com/mtgo-labs/storage v0.4.0 h1:vfZGeLSrPux45y6S3PTtpQ302fEZxlItuzC2HRfTKl8=
 github.com/mtgo-labs/storage v0.4.0/go.mod h1:sBMyZUmM0laJr1Zx4bAyYeQ6jpMCZJ64WPHcL8kNj70=
 go.uber.org/goleak v1.3.0 h1:2K3zAYmnTNqV73imy9J1T3WC+gmCePx2hEGkimedGto=
