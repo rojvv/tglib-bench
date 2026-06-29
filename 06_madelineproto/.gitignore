@@ -2,4 +2,5 @@
 /madeline-*.phar.lock
 /madeline.version
 /madeline.php
+/MadelineProto.log
 /*.madeline

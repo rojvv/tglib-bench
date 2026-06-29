@@ -90,6 +90,7 @@ $settings = new \danog\MadelineProto\Settings;
 $settings->getLogger()->setLevel(\danog\MadelineProto\Logger::LEVEL_ULTRA_VERBOSE);
 
 $settings->getConnection()->setMaxMediaSocketCount(50);
+$settings->getRpc()->setRpcDropTimeout(60 * 60);
 $settings->getFiles()->setUploadParallelChunks(50);
 $settings->getFiles()->setDownloadParallelChunks(50);
 // IMPORTANT: for security reasons, upload by URL will still be allowed
@@ -156,7 +157,7 @@ function uploadFile(AbstractAPI $api, string|int $chatId, string $filePath): arr
         caption: 'Powered by @MadelineProto!'
     );
     $endTime = microtime(true);
-    unlink($filePath);
+    \Amp\File\deleteFile($filePath);
     echo "Upload completed in " . ($endTime - $startTime) . " seconds.\n";
     return [$startTime, $endTime];
 }
@@ -182,7 +183,7 @@ final class Benchmark extends EventHandler {
                 ],
                 API::RELEASE,
             ];
-            file_put_contents("results.json", json_encode($j));
+            \Amp\File\write("results.json", json_encode($j));
         } finally {
             $this->stop();
         }
