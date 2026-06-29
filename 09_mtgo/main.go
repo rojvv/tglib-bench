@@ -53,12 +53,6 @@ func main() {
 		os.Exit(1)
 	}
 
-	_, err = client.ResolvePeer(ctx, cfg.chatID)
-	if err != nil {
-		fmt.Fprintln(os.Stderr, "Resolve target chat:", err)
-		os.Exit(1)
-	}
-
 	msgs, err := client.GetMessages(ctx, chatID, []int32{msgID})
 	if err != nil {
 		fmt.Fprintln(os.Stderr, "GetMessages:", err)
