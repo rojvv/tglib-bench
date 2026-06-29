@@ -1,4 +1,5 @@
 /madeline-*.phar
 /madeline-*.phar.lock
 /madeline.version
+/madeline.php
 /*.madeline

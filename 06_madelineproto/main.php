@@ -47,11 +47,30 @@ Assert::true(opcache_get_status(false)['jit']['enabled'], "JIT is required for m
  * required environment variables
  */
 
-$APP_ID = (int) getenv("APP_ID");
-$API_HASH = getenv("API_HASH");
-$BOT_TOKEN = getenv("BOT_TOKEN");
-$messageLink = getenv("MESSAGE_LINK");
-$CHAT_ID = getenv("CHAT_ID");
+function requiredEnv(string $name): string {
+    $value = getenv($name);
+    if ($value === false || $value === '') {
+        throw new RuntimeException("$name not set");
+    }
+    return $value;
+}
+
+function parsePositiveInt(string $value, string $name): int {
+    if (!ctype_digit($value) || (int) $value === 0) {
+        throw new RuntimeException("Invalid $name");
+    }
+    return (int) $value;
+}
+
+function requiredIntEnv(string $name): int {
+    return parsePositiveInt(requiredEnv($name), $name);
+}
+
+$API_ID = requiredIntEnv("API_ID");
+$API_HASH = requiredEnv("API_HASH");
+$BOT_TOKEN = requiredEnv("BOT_TOKEN");
+$messageLink = requiredEnv("MESSAGE_LINK");
+$CHAT_ID = requiredEnv("CHAT_ID");
 
 /**
  * @MadeLineProto Settings
@@ -67,7 +86,7 @@ $settings->getFiles()->setDownloadParallelChunks(50);
 $settings->getFiles()->setAllowAutomaticUpload(true);
 
 $settings->getAppInfo()
-    ->setApiId($APP_ID)
+    ->setApiId($API_ID)
     ->setApiHash($API_HASH);
 
 $api = new \danog\MadelineProto\API('session.madeline', $settings);
@@ -75,14 +94,29 @@ $api->botLogin($BOT_TOKEN);
 $api->start();
 $api->fullGetSelf();
 
-function getMessageDetails($messageLink) {
-    // Extract chat ID and message ID from the link
-    preg_match('/t\.me\/(\w+)\/(\d+)/', $messageLink, $matches);
-    if (count($matches) !== 3) {
+function getMessageDetails(string $messageLink): array {
+    $path = parse_url($messageLink, PHP_URL_PATH);
+    if (!is_string($path)) {
         throw new Exception("Invalid message link format.");
     }
-    $chatId = "@" . $matches[1];
-    $messageId = (int) $matches[2];
+
+    $parts = explode('/', trim($path, '/'));
+    if (count($parts) < 2) {
+        throw new Exception("Invalid message link format.");
+    }
+
+    $messageId = parsePositiveInt($parts[count($parts) - 1], "message id");
+    $chatPart = $parts[count($parts) - 2];
+
+    if ($parts[0] === 'c') {
+        $channelId = parsePositiveInt($chatPart, "channel id");
+        return [-1000000000000 - $channelId, $messageId];
+    }
+
+    if (!preg_match('/^[A-Za-z0-9_]+$/', $chatPart)) {
+        throw new Exception("Invalid message link format.");
+    }
+    $chatId = "@" . $chatPart;
 
     return [$chatId, $messageId];
 }
@@ -99,17 +133,16 @@ function downloadFile(API $api, string|int $chatId, int $messageId): array {
     $startTime = microtime(true);
     $file = $message->media->downloadToDir('/tmp');
     $endTime = microtime(true);
-    $downloadTime = $endTime - $startTime;
-    echo "Download completed in $downloadTime seconds.\n";
+    echo "Download completed in " . ($endTime - $startTime) . " seconds.\n";
 
     return [
         "file" => $file,
-        "time_taken" => $downloadTime,
+        "timestamps" => [$startTime, $endTime],
         'file_size' => $message->media->size,
     ];
 }
 
-function uploadFile(API $api, string|int $chatId, string $filePath) {
+function uploadFile(API $api, string|int $chatId, string $filePath): array {
     $startTime = microtime(true);
     $api->sendDocument(
         peer: $chatId,
@@ -119,23 +152,25 @@ function uploadFile(API $api, string|int $chatId, string $filePath) {
     );
     $endTime = microtime(true);
     unlink($filePath);
-    $uploadTime = $endTime - $startTime;
-    echo "Upload completed in $uploadTime seconds.\n";
-    return $uploadTime;
+    echo "Upload completed in " . ($endTime - $startTime) . " seconds.\n";
+    return [$startTime, $endTime];
 }
 
 list($chatId, $messageId) = getMessageDetails($messageLink);
 $fileMI = downloadFile($api, $chatId, $messageId);
 $filePath = $fileMI["file"];
 unset($fileMI["file"]);
-$uploadMI = uploadFile($api, $CHAT_ID, $filePath);
+$uploadTimestamps = uploadFile($api, $CHAT_ID, $filePath);
 
 $j = [
     $fileMI['file_size'],
     [
-        $fileMI['time_taken'],
-        $uploadMI
-    ]
+        $fileMI['timestamps'][0],
+        $fileMI['timestamps'][1],
+        $uploadTimestamps[0],
+        $uploadTimestamps[1],
+    ],
+    API::RELEASE,
 ];
-file_put_contents("results.json", json_encode($j, JSON_PRETTY_PRINT));
+file_put_contents("results.json", json_encode($j));
 ?>
