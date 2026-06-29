@@ -66,11 +66,19 @@ function requiredIntEnv(string $name): int {
     return parsePositiveInt(requiredEnv($name), $name);
 }
 
+function requiredChannelPeerEnv(string $name): int {
+    $value = requiredEnv($name);
+    if (!preg_match('/^-100\d+$/', $value)) {
+        throw new RuntimeException("Invalid $name");
+    }
+    return (int) $value;
+}
+
 $API_ID = requiredIntEnv("API_ID");
 $API_HASH = requiredEnv("API_HASH");
 $BOT_TOKEN = requiredEnv("BOT_TOKEN");
 $messageLink = requiredEnv("MESSAGE_LINK");
-$CHAT_ID = requiredEnv("CHAT_ID");
+$CHAT_ID = requiredChannelPeerEnv("CHAT_ID");
 
 /**
  * @MadeLineProto Settings
