@@ -19,6 +19,7 @@ on:
           - 08_gogram
           - 09_mtgo
           - 10_gotd
+          - 11_gotdbot
         required: true
 
 permissions:
@@ -322,6 +323,39 @@ jobs:
 
       - run: |
           cd 10_gotd/
+          go run .
+
+          cd ../
+          ./_commit.sh
+
+  # 11_gotdbot
+  gotdbot:
+    if: github.event.inputs.library == '11_gotdbot' || github.event.inputs.library == 'All'
+    runs-on: ubuntu-latest
+    env:
+      API_ID: ${{ secrets.API_ID }}
+      API_HASH: ${{ secrets.API_HASH }}
+      BOT_TOKEN: ${{ secrets.BOT_TOKEN_11 }}
+      MESSAGE_LINK: ${{ secrets.MESSAGE_LINK }}
+      CHAT_ID: ${{ secrets.CHAT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.26"
+          cache-dependency-path: 11_gotdbot/go.sum
+
+      - uses: actions/cache@v4
+        with:
+          path: 11_gotdbot/libtdjson.so.1.8.65
+          key: tdlib-shared-1.8.65
+
+      - run: |
+          cd 11_gotdbot/
+          if [ ! -f libtdjson.so.1.8.65 ]; then
+            go generate ./...
+          fi
           go run .
 
           cd ../
