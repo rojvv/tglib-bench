@@ -1,8 +1,9 @@
 import { ok } from "node:assert";
-import { writeFileSync } from "node:fs";
+import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import { Api, TelegramClient, version, sessions } from "teleproto";
 import env from "./env.ts";
-import { CustomFile } from "teleproto/client/uploads.js";
 
 const client = new TelegramClient(
   new sessions.StringSession(env.AUTH_STRING),
@@ -39,21 +40,28 @@ dates.push(new Date());
 
 ok(Buffer.isBuffer(downloaded), "Download did not return a buffer.");
 
+const uploadDir = mkdtempSync(join(tmpdir(), "teleproto-upload-"));
+const uploadPath = join(uploadDir, "teleproto.bin");
+writeFileSync(uploadPath, downloaded);
+
 dates.push(new Date());
-downloaded.name = "teleproto.bin";
-await client.sendFile(env.CHAT_ID, {
-  file: new CustomFile('teleproto.bin', downloaded.byteLength, '', downloaded),
-  fileSize: downloaded.byteLength,
-  forceDocument: true,
-  workers: 8,
-  progressCallback: (progress)=>{
-    console.log('Upload progress:', progress);
-  },
-  attributes: [
-    new Api.DocumentAttributeFilename({ fileName: "teleproto.bin" }),
-  ],
-});
-dates.push(new Date());
+try {
+  await client.sendFile(env.CHAT_ID, {
+    file: uploadPath,
+    fileSize: downloaded.byteLength,
+    forceDocument: true,
+    workers: 8,
+    progressCallback: (progress) => {
+      console.log("Upload progress:", progress);
+    },
+    attributes: [
+      new Api.DocumentAttributeFilename({ fileName: "teleproto.bin" }),
+    ],
+  });
+  dates.push(new Date());
+} finally {
+  rmSync(uploadDir, { recursive: true, force: true });
+}
 
 await client.disconnect();
 writeFileSync(
