@@ -2,7 +2,7 @@ import { ok } from "node:assert";
 import { writeFileSync } from "node:fs";
 import { Api, TelegramClient, version, sessions } from "teleproto";
 import env from "./env.ts";
-import { CustomFile } from "teleproto/client/uploads";
+import { CustomFile } from "teleproto/client/uploads.js";
 
 const client = new TelegramClient(
   new sessions.StringSession(env.AUTH_STRING),
