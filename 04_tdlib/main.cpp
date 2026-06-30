@@ -203,7 +203,7 @@ class Client {
     upload_started_ = true;
 
     auto input_message_document = td_api::make_object<td_api::inputMessageDocument>();
-    input_message_document->document_ = td_api::make_object<td_api::inputFileLocal>(file_name_);
+    input_message_document->document_ = td_api::make_object<td_api::inputDocument>(td_api::make_object<td_api::inputFileLocal>(file_name_));
 
     auto request = td_api::make_object<td_api::sendMessage>();
     request->chat_id_ = strtoll(std::getenv("CHAT_ID"), nullptr, 10);
