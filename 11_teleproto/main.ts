@@ -2,6 +2,7 @@ import { ok } from "node:assert";
 import { writeFileSync } from "node:fs";
 import { Api, TelegramClient, version, sessions } from "teleproto";
 import env from "./env.ts";
+import { CustomFile } from "teleproto/client/uploads";
 
 const client = new TelegramClient(
   new sessions.StringSession(env.AUTH_STRING),
@@ -41,7 +42,7 @@ ok(Buffer.isBuffer(downloaded), "Download did not return a buffer.");
 dates.push(new Date());
 downloaded.name = "teleproto.bin";
 await client.sendFile(env.CHAT_ID, {
-  file: downloaded,
+  file: new CustomFile('teleproto.bin', downloaded.byteLength, '', downloaded),
   fileSize: downloaded.byteLength,
   forceDocument: true,
   workers: 8,
