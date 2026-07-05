@@ -143,6 +143,13 @@ function downloadFile(API $api, string|int $chatId, int $messageId): array {
         throw new AssertionError("No media found in request");
     }
 
+    echo "Starting warm-up download...\n";
+    $warmupFile = $message->media->downloadToDir('/tmp');
+    if (!is_file($warmupFile) || !unlink($warmupFile)) {
+        throw new RuntimeException("Failed to remove warm-up download: $warmupFile");
+    }
+    echo "Warm-up download completed.\n";
+
     $startTime = microtime(true);
     $file = $message->media->downloadToDir('/tmp');
     $endTime = microtime(true);
