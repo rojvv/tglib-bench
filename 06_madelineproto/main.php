@@ -93,8 +93,8 @@ $settings->getLogger()->setLevel(\danog\MadelineProto\Logger::LEVEL_ULTRA_VERBOS
 
 $settings->getConnection()->setMaxMediaSocketCount(50);
 $settings->getRpc()->setRpcDropTimeout(60 * 60);
-$settings->getFiles()->setUploadParallelChunks(50);
-$settings->getFiles()->setDownloadParallelChunks(50);
+$settings->getFiles()->setUploadParallelChunks(8);
+$settings->getFiles()->setDownloadParallelChunks(8);
 // IMPORTANT: for security reasons, upload by URL will still be allowed
 $settings->getFiles()->setAllowAutomaticUpload(true);
 
