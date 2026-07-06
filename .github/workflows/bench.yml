@@ -335,7 +335,7 @@ jobs:
     env:
       API_ID: ${{ secrets.API_ID }}
       API_HASH: ${{ secrets.API_HASH }}
-      BOT_TOKEN: ${{ secrets.BOT_TOKEN_11 }}
+      AUTH_STRING: ${{ secrets.AUTH_STRING_11 }}
       MESSAGE_LINK: ${{ secrets.MESSAGE_LINK }}
       CHAT_ID: ${{ secrets.CHAT_ID }}
     steps:

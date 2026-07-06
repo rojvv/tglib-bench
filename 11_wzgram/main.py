@@ -8,35 +8,34 @@ from pyrogram import __version__
 import env
 from util import parse_message_link
 
-BOT_TOKEN = env.BOT_TOKEN
-API_ID = env.API_ID
-API_HASH = env.API_HASH
-CHAT_ID = env.CHAT_ID
-MESSAGE_LINK = env.MESSAGE_LINK
+app = Client(
+    ":memory:",
+    session_string=env.AUTH_STRING if env.AUTH_STRING else None,
+    api_id=env.API_ID,
+    api_hash=env.API_HASH,
+    no_updates=True,
+)
+app.connect()
+
+if env.EXPORT_AUTH_STRING:
+    app.sign_in_bot(bot_token=env.BOT_TOKEN)
+    print(app.export_session_string())
+    exit(0)
 
 
 async def main():
-    app = Client(
-        ":memory:",
-        bot_token=BOT_TOKEN,
-        api_id=API_ID,
-        api_hash=API_HASH,
-        no_updates=True,
-    )
-    await app.start()
-
-    chat_id, message_id = parse_message_link(MESSAGE_LINK)
+    chat_id, message_id = parse_message_link(env.MESSAGE_LINK)
 
     timestamps: list[float] = []
     message = await app.get_messages(chat_id=chat_id, message_ids=message_id)
     if not message:
         print("Message not found.", file=sys.stderr)
-        await app.stop()
+        await app.disconnect()
         sys.exit(1)
 
     if not message.document:
         print("Invalid message.", file=sys.stderr)
-        await app.stop()
+        await app.disconnect()
         sys.exit(1)
 
     file_size = message.document.file_size
@@ -49,7 +48,7 @@ async def main():
     timestamps.append(time.time())
     print("\nUploading...")
     await app.send_document(
-        chat_id=CHAT_ID,
+        chat_id=env.CHAT_ID,
         document=file_name,
         force_document=True,
     )
@@ -58,8 +57,8 @@ async def main():
     with open("results.json", "w+") as f:
         json.dump([file_size, timestamps, __version__], f)
 
-    await app.stop()
+    await app.disconnect()
 
 
 if __name__ == "__main__":
-    Client("", no_updates=True).run(main())
+    app.run(main())
