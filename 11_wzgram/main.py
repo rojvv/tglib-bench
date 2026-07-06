@@ -18,7 +18,7 @@ app = Client(
 
 
 async def main():
-    await app.connect()
+    await app.start()
 
     chat_id, message_id = parse_message_link(env.MESSAGE_LINK)
 
@@ -26,12 +26,12 @@ async def main():
     message = await app.get_messages(chat_id=chat_id, message_ids=message_id)
     if not message:
         print("Message not found.", file=sys.stderr)
-        await app.disconnect()
+        await app.stop()
         sys.exit(1)
 
     if not message.document:
         print("Invalid message.", file=sys.stderr)
-        await app.disconnect()
+        await app.stop()
         sys.exit(1)
 
     file_size = message.document.file_size
@@ -53,7 +53,7 @@ async def main():
     with open("results.json", "w+") as f:
         json.dump([file_size, timestamps, __version__], f)
 
-    await app.disconnect()
+    await app.stop()
 
 
 if __name__ == "__main__":
