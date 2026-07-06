@@ -253,34 +253,6 @@ jobs:
           cd ../
           ./_commit.sh
 
-  # 11_wzgram
-  wzgram:
-    if: github.event.inputs.library == '11_wzgram' || github.event.inputs.library == 'All'
-    runs-on: ubuntu-latest
-    env:
-      API_ID: ${{ secrets.API_ID }}
-      API_HASH: ${{ secrets.API_HASH }}
-      BOT_TOKEN: ${{ secrets.BOT_TOKEN_11 }}
-      AUTH_STRING: x
-      MESSAGE_LINK: ${{ secrets.MESSAGE_LINK }}
-      CHAT_ID: ${{ secrets.CHAT_ID }}
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.13"
-
-      - run: python -m pip install poetry
-
-      - run: |
-          cd 11_wzgram/
-          poetry install
-          poetry run python main.py
-
-          cd ../
-          ./_commit.sh
-
   # 08_gogram
   gogram:
     if: github.event.inputs.library == '08_gogram' || github.event.inputs.library == 'All'
@@ -352,6 +324,34 @@ jobs:
       - run: |
           cd 10_gotd/
           go run .
+
+          cd ../
+          ./_commit.sh
+
+  # 11_wzgram
+  wzgram:
+    if: github.event.inputs.library == '11_wzgram' || github.event.inputs.library == 'All'
+    runs-on: ubuntu-latest
+    env:
+      API_ID: ${{ secrets.API_ID }}
+      API_HASH: ${{ secrets.API_HASH }}
+      BOT_TOKEN: ${{ secrets.BOT_TOKEN_11 }}
+      AUTH_STRING: x
+      MESSAGE_LINK: ${{ secrets.MESSAGE_LINK }}
+      CHAT_ID: ${{ secrets.CHAT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - run: python -m pip install poetry
+
+      - run: |
+          cd 11_wzgram/
+          poetry install
+          poetry run python main.py
 
           cd ../
           ./_commit.sh
