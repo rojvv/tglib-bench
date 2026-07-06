@@ -20,6 +20,7 @@ on:
           - 09_mtgo
           - 10_gotd
           - 11_teleproto
+          - 12_wzgram
         required: true
 
 permissions:
@@ -247,6 +248,34 @@ jobs:
 
       - run: |
           cd 07_pyrogrammod/
+          poetry install
+          poetry run python main.py
+
+          cd ../
+          ./_commit.sh
+
+  # 12_wzgram
+  wzgram:
+    if: github.event.inputs.library == '12_wzgram' || github.event.inputs.library == 'All'
+    runs-on: ubuntu-latest
+    env:
+      API_ID: ${{ secrets.API_ID }}
+      API_HASH: ${{ secrets.API_HASH }}
+      BOT_TOKEN: ${{ secrets.BOT_TOKEN_12 }}
+      AUTH_STRING: x
+      MESSAGE_LINK: ${{ secrets.MESSAGE_LINK }}
+      CHAT_ID: ${{ secrets.CHAT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - run: python -m pip install poetry
+
+      - run: |
+          cd 12_wzgram/
           poetry install
           poetry run python main.py
 
