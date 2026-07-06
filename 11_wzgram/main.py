@@ -10,20 +10,16 @@ from util import parse_message_link
 
 app = Client(
     ":memory:",
-    session_string=env.AUTH_STRING if env.AUTH_STRING else None,
+    session_string=env.AUTH_STRING,
     api_id=env.API_ID,
     api_hash=env.API_HASH,
     no_updates=True,
 )
-app.connect()
-
-if env.EXPORT_AUTH_STRING:
-    app.sign_in_bot(bot_token=env.BOT_TOKEN)
-    print(app.export_session_string())
-    exit(0)
 
 
 async def main():
+    await app.connect()
+
     chat_id, message_id = parse_message_link(env.MESSAGE_LINK)
 
     timestamps: list[float] = []
