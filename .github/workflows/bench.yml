@@ -20,6 +20,7 @@ on:
           - 09_mtgo
           - 10_gotd
           - 11_wzgram
+          - 12_teleproto
         required: true
 
 permissions:
@@ -355,3 +356,33 @@ jobs:
           cd ../
           ./_commit.sh
 
+  # 12_teleproto
+  teleproto:
+    if: github.event.inputs.library == '12_teleproto' || github.event.inputs.library == 'All'
+    runs-on: ubuntu-latest
+    env:
+      API_ID: ${{ secrets.API_ID }}
+      API_HASH: ${{ secrets.API_HASH }}
+      AUTH_STRING: ${{ secrets.AUTH_STRING_12 }}
+      MESSAGE_LINK: ${{ secrets.MESSAGE_LINK }}
+      CHAT_ID: ${{ secrets.CHAT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 23.x
+          cache: pnpm
+          cache-dependency-path: "**/pnpm-lock.yaml"
+
+      - run: |
+          cd 12_teleproto/
+          pnpm install
+          node main.ts
+
+          cd ../
+          ./_commit.sh
