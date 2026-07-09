@@ -2,6 +2,7 @@ import json
 import sys
 import time
 import uvloop
+uvloop.install()
 
 from pyrogram import Client
 from pyrogram import __version__
@@ -53,5 +54,4 @@ async def main():
 
 
 if __name__ == "__main__":
-    uvloop.install()
     app.run(main())
