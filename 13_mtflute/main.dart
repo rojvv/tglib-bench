@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:mtflute/mtflute.dart';
 
-const String _libVersion = '0.2.8';
+const String _libVersion = '0.2.9';
 const int _threads = 4;
 
 Future<void> main(List<String> args) async {

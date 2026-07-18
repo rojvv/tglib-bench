@@ -7,4 +7,4 @@ environment:
   sdk: ^3.8.0
 
 dependencies:
-  mtflute: ^0.2.8
+  mtflute: ^0.2.9
