@@ -130,14 +130,14 @@ files = [
 
 [[package]]
 name = "wzgram"
-version = "3.0.19"
+version = "3.0.21"
 description = "Elegant, modern and asynchronous Telegram MTProto API framework in Python for users and bots"
 optional = false
 python-versions = ">=3.10"
 groups = ["main"]
 files = [
-    {file = "wzgram-3.0.19-py3-none-any.whl", hash = "sha256:5c467d2b8280c402961456e01469d80505f0af4ea707974d202e8be1a67899f4"},
-    {file = "wzgram-3.0.19.tar.gz", hash = "sha256:b0babbaf53f4e69f1b419c4fdbdac1c8cb3346d3dcc6348ccc9f98731ac9f8f5"},
+    {file = "wzgram-3.0.21-py3-none-any.whl", hash = "sha256:deda10a7851c53651c85ccdd20ec633152bbca6284c1e1b92161ee560d41c93a"},
+    {file = "wzgram-3.0.21.tar.gz", hash = "sha256:fba075aff6828d6ba3beebeda8c52be4acdca9db0202224d36e0592069bd06ad"},
 ]
 
 [package.dependencies]
