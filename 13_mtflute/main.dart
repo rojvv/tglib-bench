@@ -3,7 +3,8 @@ import 'dart:io';
 
 import 'package:mtflute/mtflute.dart';
 
-const String _libVersion = '0.2.6';
+const String _libVersion = '0.2.8';
+const int _threads = 4;
 
 Future<void> main(List<String> args) async {
   final cfg = _loadEnv();
@@ -54,7 +55,8 @@ Future<void> main(List<String> args) async {
       loc,
       dcId: doc.dcId,
       size: doc.size,
-      chunkSize: 512 * 1024,
+      chunkSize: 1024 * 1024,
+      threads: _threads,
     )) {
       sink.add(chunk);
     }
@@ -65,7 +67,11 @@ Future<void> main(List<String> args) async {
   timestamps.add(_now());
 
   timestamps.add(_now());
-  final uploaded = await client.uploadFile(tmp, fileName: 'mtflute.bin');
+  final uploaded = await client.uploadFile(
+    tmp,
+    fileName: 'mtflute.bin',
+    threads: _threads,
+  );
   timestamps.add(_now());
 
   final target = await _resolveChatIdPeer(client, cfg.chatId);

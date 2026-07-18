@@ -29,10 +29,10 @@ packages:
     dependency: "direct main"
     description:
       name: mtflute
-      sha256: dc57c765fd3843add5e4a218cce58fa44b20e26d9218be83efbdd3c048db0cf0
+      sha256: b54bac5e2d1bb6b7aa2d6d7447e1a2a45ab564449c491ad1b101a55fb0057b35
       url: "https://pub.dev"
     source: hosted
-    version: "0.2.6"
+    version: "0.2.8"
   pointycastle:
     dependency: transitive
     description:
