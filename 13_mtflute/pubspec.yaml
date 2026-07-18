@@ -1,0 +1,10 @@
+name: tglib_bench_mtflute
+description: mtflute entry for tglib-bench.
+publish_to: none
+version: 0.0.1
+
+environment:
+  sdk: ^3.8.0
+
+dependencies:
+  mtflute: ^0.2.6

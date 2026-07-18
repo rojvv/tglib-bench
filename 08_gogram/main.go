@@ -60,14 +60,20 @@ func main() {
 	buf := bytes.NewBuffer(make([]byte, 0, doc.Size))
 
 	timestamps = append(timestamps, now())
-	if _, err := message.Download(&telegram.DownloadOptions{Buffer: buf}); err != nil {
+	if _, err := message.Download(&telegram.DownloadOptions{
+		Buffer:         buf,
+		MaxBytesPerSec: telegram.UploadCap20M,
+	}); err != nil {
 		fmt.Fprintln(os.Stderr, "Download:", err)
 		os.Exit(1)
 	}
 	timestamps = append(timestamps, now())
 
 	timestamps = append(timestamps, now())
-	uploaded, err := client.UploadFile(buf.Bytes(), &telegram.UploadOptions{FileName: "gogram.bin"})
+	uploaded, err := client.UploadFile(buf.Bytes(), &telegram.UploadOptions{
+		FileName:       "gogram.bin",
+		MaxBytesPerSec: telegram.UploadCap20M,
+	})
 	if err != nil {
 		fmt.Fprintln(os.Stderr, "UploadFile:", err)
 		os.Exit(1)
