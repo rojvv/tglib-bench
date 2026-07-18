@@ -21,6 +21,7 @@ on:
           - 10_gotd
           - 11_wzgram
           - 12_teleproto
+          - 13_mtflute
         required: true
 
 permissions:
@@ -383,6 +384,31 @@ jobs:
           cd 12_teleproto/
           pnpm install
           node main.ts
+
+          cd ../
+          ./_commit.sh
+
+  # 13_mtflute
+  mtflute:
+    if: github.event.inputs.library == '13_mtflute' || github.event.inputs.library == 'All'
+    runs-on: ubuntu-latest
+    env:
+      API_ID: ${{ secrets.API_ID }}
+      API_HASH: ${{ secrets.API_HASH }}
+      AUTH_STRING: ${{ secrets.AUTH_STRING_13 }}
+      MESSAGE_LINK: ${{ secrets.MESSAGE_LINK }}
+      CHAT_ID: ${{ secrets.CHAT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+
+      - run: |
+          cd 13_mtflute/
+          dart pub get
+          dart run main.dart
 
           cd ../
           ./_commit.sh
