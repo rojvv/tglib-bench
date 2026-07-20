@@ -19,7 +19,7 @@ if (!extension_loaded('swoole') && !extension_loaded('openswoole')) {
     throw new RuntimeException('ext-swoole (or openswoole) is required for the parallel benchmark.');
 }
 
-define('UPLOAD_CONCURRENCY', (int) (getenv('UPLOAD_CONCURRENCY') ?: 16));
+define('UPLOAD_CONCURRENCY', (int) (getenv('UPLOAD_CONCURRENCY') ?: 32));
 
 define('DOWNLOAD_CONCURRENCY', (int) (getenv('DOWNLOAD_CONCURRENCY') ?: 32));
 
