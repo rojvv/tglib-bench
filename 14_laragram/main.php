@@ -19,7 +19,7 @@ if (!extension_loaded('swoole') && !extension_loaded('openswoole')) {
     throw new RuntimeException('ext-swoole (or openswoole) is required for the parallel benchmark.');
 }
 
-define('UPLOAD_CONCURRENCY', (int) (getenv('UPLOAD_CONCURRENCY') ?: 32));
+define('UPLOAD_CONCURRENCY', (int) (getenv('UPLOAD_CONCURRENCY') ?: 16));
 
 define('DOWNLOAD_CONCURRENCY', (int) (getenv('DOWNLOAD_CONCURRENCY') ?: 32));
 
@@ -52,17 +52,30 @@ function requiredChannelPeerEnv(string $name): int {
     return (int) $value;
 }
 
+$EXPORT_AUTH_STRING = (bool) getenv('EXPORT_AUTH_STRING');
+$AUTH_STRING = getenv('AUTH_STRING') ?: null;
+
 $API_ID = requiredIntEnv("API_ID");
 $API_HASH = requiredEnv("API_HASH");
-$BOT_TOKEN = requiredEnv("BOT_TOKEN");
-$messageLink = requiredEnv("MESSAGE_LINK");
-$CHAT_ID = requiredChannelPeerEnv("CHAT_ID");
+$BOT_TOKEN = getenv('BOT_TOKEN') ?: null;
+
+if ($EXPORT_AUTH_STRING) {
+    if ($BOT_TOKEN === null) {
+        throw new RuntimeException('BOT_TOKEN not set (required to mint a new AUTH_STRING)');
+    }
+} elseif ($AUTH_STRING === null && $BOT_TOKEN === null) {
+    throw new RuntimeException('Set AUTH_STRING (preferred) or BOT_TOKEN');
+}
+
+$messageLink = $EXPORT_AUTH_STRING ? '' : requiredEnv("MESSAGE_LINK");
+$CHAT_ID = $EXPORT_AUTH_STRING ? 0 : requiredChannelPeerEnv("CHAT_ID");
 
 $client = new Client($API_ID, $API_HASH, [
     'session_dir'       => __DIR__ . '/sessions',
     'flood_sleep_limit' => 60 * 60,
     'use_pump'          => true,
     'transfer'          => ['media_sockets' => MEDIA_SOCKETS],
+    'auth_string'       => $EXPORT_AUTH_STRING ? null : $AUTH_STRING,
 ]);
 
 printf(
@@ -78,7 +91,20 @@ if (!FfiIgeCrypto::isSupported()) {
 }
 
 $client->connect('session.mtproto');
-(new Authorization($client))->botLogin($BOT_TOKEN);
+
+if ($client->getSession()->getAuthKey() === null) {
+    if ($BOT_TOKEN === null) {
+        throw new RuntimeException('AUTH_STRING did not yield a usable session and no BOT_TOKEN was given to log in with.');
+    }
+    (new Authorization($client))->botLogin($BOT_TOKEN);
+}
+
+if ($EXPORT_AUTH_STRING) {
+    fwrite(STDERR, "Session authenticated. AUTH_STRING (store as a secret):\n");
+    echo $client->authString(), "\n";
+    $client->disconnect();
+    exit(0);
+}
 
 function getMessageDetails(string $messageLink): array {
     $path = parse_url($messageLink, PHP_URL_PATH);
