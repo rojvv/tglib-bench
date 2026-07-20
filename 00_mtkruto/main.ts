@@ -34,4 +34,4 @@ Deno.writeTextFileSync(
   "results.json",
   JSON.stringify([document.byteLength, dates.map((v) => v.getTime() / 1_000)]),
 );
-Deno.exit(0)
+Deno.exit(0);
