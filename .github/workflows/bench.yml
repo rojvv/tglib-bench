@@ -441,4 +441,4 @@ jobs:
           API_ID="$API_ID" API_HASH="$API_HASH" BOT_TOKEN="$BOT_TOKEN" AUTH_STRING="$AUTH_STRING" MESSAGE_LINK="$MESSAGE_LINK" CHAT_ID="$CHAT_ID" php main.php
 
           cd ..
-            ./_commit.sh
+          ./_commit.sh
