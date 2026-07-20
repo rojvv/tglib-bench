@@ -1,0 +1,4 @@
+/vendor
+/sessions
+composer.json
+composer.lock

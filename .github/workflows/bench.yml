@@ -22,6 +22,7 @@ on:
           - 11_wzgram
           - 12_teleproto
           - 13_mtflute
+          - 14_laragram
         required: true
 
 permissions:
@@ -411,4 +412,33 @@ jobs:
           dart run main.dart
 
           cd ../
+          ./_commit.sh
+  # 14_laragram
+  laragram:
+    if: github.event.inputs.library == '14_laragram' || github.event.inputs.library == 'All'
+    runs-on: ubuntu-latest
+    env:
+      API_ID: ${{ secrets.API_ID }}
+      API_HASH: ${{ secrets.API_HASH }}
+      BOT_TOKEN: ${{ secrets.BOT_TOKEN_14 }}
+      AUTH_STRING: ${{ secrets.AUTH_STRING_14 }}
+      MESSAGE_LINK: ${{ secrets.MESSAGE_LINK }}
+      CHAT_ID: ${{ secrets.CHAT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          extensions: swoole, ffi
+          coverage: none
+          ini-values: ffi.enable=1
+
+      - run: |
+          cd 14_laragram
+          composer require laraxgram/mtproto
+          php vendor/bin/parse-telegram-api.php
+          php vendor/bin/compile-tl.php
+          API_ID="$API_ID" API_HASH="$API_HASH" BOT_TOKEN="$BOT_TOKEN" AUTH_STRING="$AUTH_STRING" MESSAGE_LINK="$MESSAGE_LINK" CHAT_ID="$CHAT_ID" php main.php
+
+          cd ..
           ./_commit.sh
