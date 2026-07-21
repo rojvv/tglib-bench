@@ -92,11 +92,10 @@ if (!FfiIgeCrypto::isSupported()) {
 
 $client->connect('session.mtproto');
 
-if ($client->getSession()->getAuthKey() === null) {
-    if ($BOT_TOKEN === null) {
-        throw new RuntimeException('AUTH_STRING did not yield a usable session and no BOT_TOKEN was given to log in with.');
-    }
+if ($BOT_TOKEN !== null) {
     (new Authorization($client))->botLogin($BOT_TOKEN);
+} elseif ($client->getSession()->getAuthKey() === null) {
+    throw new RuntimeException('No AUTH_STRING seed and no BOT_TOKEN to log in with.');
 }
 
 if ($EXPORT_AUTH_STRING) {
