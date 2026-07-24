@@ -1,7 +1,7 @@
 github.com/klauspost/compress v1.19.1 h1:VsB4HPswih7mmZ8WleSFQ75c/Ui1M4trX5oAsJnhSlk=
 github.com/klauspost/compress v1.19.1/go.mod h1:cwPg85FWrGar70rWktvGQj8/hthj3wpl0PGDogxkrSQ=
-github.com/mtgo-labs/mtgo v0.17.0 h1:y+Wtw7dAIpPXyLD9d/GU/FKCR5e7eMTEVivp7yq0cqA=
-github.com/mtgo-labs/mtgo v0.17.0/go.mod h1:Ic/iVnNWuKAee/FTsA23MCuasar3aEeA2hmdm1BIEzc=
+github.com/mtgo-labs/mtgo v0.18.0 h1:OassfJUbV/3FB7MoDiDQpNfW1b77Mimv6bnnEdnWtgY=
+github.com/mtgo-labs/mtgo v0.18.0/go.mod h1:Ic/iVnNWuKAee/FTsA23MCuasar3aEeA2hmdm1BIEzc=
 github.com/mtgo-labs/session-converter v0.5.0 h1:NO2uPzSaxed7t1+snRLtRopC5jhmlTDwkj0wJcV+lGY=
 github.com/mtgo-labs/session-converter v0.5.0/go.mod h1:C7Ox25A0ZAIngpbZxUs9a1UA/FBGI5Jsq95MjFB4plw=
 github.com/mtgo-labs/storage v0.5.0 h1:x6asAZcLpfhqxEjR6kP4l42246R9XodZGawXsLWLuq8=
