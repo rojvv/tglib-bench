@@ -1,7 +1,7 @@
 {
   "version": "5",
   "specifiers": {
-    "jsr:@mtkruto/mtkruto@0.214": "0.214.0",
+    "jsr:@mtkruto/mtkruto@0.215": "0.215.0",
     "jsr:@roj/tgcrypto@1.0.3": "1.0.3",
     "jsr:@std/assert@1": "1.0.19",
     "jsr:@std/assert@1.0.19": "1.0.19",
@@ -22,8 +22,8 @@
     "npm:envalid@8": "8.1.0"
   },
   "jsr": {
-    "@mtkruto/mtkruto@0.214.0": {
-      "integrity": "0de287ec028655ccf6f5fb90b68759a4fd22ef32a871d68db1727ef268b81013",
+    "@mtkruto/mtkruto@0.215.0": {
+      "integrity": "ac05c67ca0e29e7ee6ecc8592f2f71877c8fe12cf0227d648b7292f6d46228f8",
       "dependencies": [
         "jsr:@roj/tgcrypto",
         "jsr:@std/assert@1.0.19",
@@ -105,7 +105,7 @@
   },
   "workspace": {
     "dependencies": [
-      "jsr:@mtkruto/mtkruto@0.214",
+      "jsr:@mtkruto/mtkruto@0.215",
       "jsr:@std/assert@1",
       "npm:envalid@8"
     ]
