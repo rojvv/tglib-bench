@@ -3,7 +3,6 @@ import os
 API_ID = int(os.getenv("API_ID", "0"))
 API_HASH = os.getenv("API_HASH", "")
 AUTH_STRING = os.environ.get("AUTH_STRING", "")
-AUTH_STRING_WZ = os.getenv("AUTH_STRING_WZ", "")
 MESSAGE_LINK = os.getenv("MESSAGE_LINK", "")
 CHAT_ID = int(os.getenv("CHAT_ID", "0"))
 
@@ -14,7 +13,7 @@ if not API_ID:
     raise ValueError("Invalid API_ID")
 if not API_HASH:
     raise ValueError("API_HASH not set")
-if not EXPORT_AUTH_STRING and not AUTH_STRING and not AUTH_STRING_WZ:
+if not EXPORT_AUTH_STRING and not AUTH_STRING:
     raise ValueError("AUTH_STRING not set")
 if not EXPORT_AUTH_STRING and not CHAT_ID:
     raise ValueError("CHAT_ID not set")
