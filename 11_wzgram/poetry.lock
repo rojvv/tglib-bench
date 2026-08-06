@@ -96,55 +96,55 @@ test = ["aiohttp (>=3.10.5)", "flake8 (>=6.1,<7.0)", "mypy (>=0.800)", "psutil",
 
 [[package]]
 name = "warpcrypto"
-version = "2.0.4"
+version = "2.0.5"
 description = "Fast and Portable Cryptography Extension Library (Rust)"
 optional = false
 python-versions = ">=3.8"
 groups = ["main"]
 files = [
-    {file = "warpcrypto-2.0.4-cp310-cp310-macosx_11_0_arm64.whl", hash = "sha256:436ef251f8d420c0d1d26c89c8b4246a97c570a469b4822a6fc197db83241573"},
-    {file = "warpcrypto-2.0.4-cp310-cp310-manylinux_2_34_aarch64.whl", hash = "sha256:7457c10a02b66851f72b42f6f66b77dd3541e986961186ae3cede62c609aad3c"},
-    {file = "warpcrypto-2.0.4-cp310-cp310-manylinux_2_34_x86_64.whl", hash = "sha256:644c1aaecf7c770e6aa7767cb9310fa373a6235f5c5c144a1c30d22f80eaff5d"},
-    {file = "warpcrypto-2.0.4-cp310-cp310-win_amd64.whl", hash = "sha256:224a3bec2e644e3f39cf798cb9a27e65bb18aa137091d8bc69ee2e5b751639ec"},
-    {file = "warpcrypto-2.0.4-cp311-cp311-macosx_11_0_arm64.whl", hash = "sha256:d83cedca5aa9c8c531809df01bfffb6ff31a7917ecff3b77568814a0be214741"},
-    {file = "warpcrypto-2.0.4-cp311-cp311-manylinux_2_34_aarch64.whl", hash = "sha256:27ce7cc5fa36112056f48e2774bb3f2aecf3e005635bb8183f36c87405495b96"},
-    {file = "warpcrypto-2.0.4-cp311-cp311-manylinux_2_34_x86_64.whl", hash = "sha256:74179feb3ba362fe66c47b3a24a3fb6179866501227dfd8878c60e3787b3ac8f"},
-    {file = "warpcrypto-2.0.4-cp311-cp311-win_amd64.whl", hash = "sha256:9b09322ce26829f293b51be5c8f8fb09995967716662ef2fc19752aaeb7fe2b2"},
-    {file = "warpcrypto-2.0.4-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:3562ced7a9f7dd1a75627d0cf8440f9fa044c8c0857c3affc2ed1eae34f8b226"},
-    {file = "warpcrypto-2.0.4-cp312-cp312-manylinux_2_34_aarch64.whl", hash = "sha256:568ca30254edd372bc126486b2482c3802d4b452c446c87be63bb6a1fd082a0a"},
-    {file = "warpcrypto-2.0.4-cp312-cp312-manylinux_2_34_x86_64.whl", hash = "sha256:9c0503217ac8d7d14d87e4cd4638d5aa858836b1a6bc181c5028497697a4d3e4"},
-    {file = "warpcrypto-2.0.4-cp312-cp312-win_amd64.whl", hash = "sha256:63c49773fdb41d0a5fb2d638474e8fae2c21196fed984f08cdccf090773e75fd"},
-    {file = "warpcrypto-2.0.4-cp313-cp313-macosx_11_0_arm64.whl", hash = "sha256:62dfc4dc0e74ffeb55decf7d5afd1ae2820f638a4ede50fc312144fcd17f5358"},
-    {file = "warpcrypto-2.0.4-cp313-cp313-manylinux_2_34_aarch64.whl", hash = "sha256:2caeacddc0649e73692574c5fbdd5461fd4049edd76fa7ec70df5ac39296df3b"},
-    {file = "warpcrypto-2.0.4-cp313-cp313-manylinux_2_34_x86_64.whl", hash = "sha256:54e4d32513f4920ea90b0dfb914c37388981cd950dfb7637a072883d414447a3"},
-    {file = "warpcrypto-2.0.4-cp313-cp313-win_amd64.whl", hash = "sha256:ef6af21dd85380090b6019bd8df8e6eef970b607808dfedcaa17ac1b94454efc"},
-    {file = "warpcrypto-2.0.4-cp314-cp314-macosx_11_0_arm64.whl", hash = "sha256:30f246d25bb3bedb0fee395f3ebe8c8b3f368b74fce71f02a0072661e5475708"},
-    {file = "warpcrypto-2.0.4-cp314-cp314-manylinux_2_34_aarch64.whl", hash = "sha256:8aab9220a3a4b65c2ad4846bc42ea4629612839e3feec582b8181ec346baab92"},
-    {file = "warpcrypto-2.0.4-cp314-cp314-manylinux_2_34_x86_64.whl", hash = "sha256:6cb2545677e678f01e786f171c089959fd97eacc02f345155fb31389d0817afc"},
-    {file = "warpcrypto-2.0.4-cp314-cp314-win_amd64.whl", hash = "sha256:57ca2bb8ba94ee6051b925bc1f90339a098ddac768bbd56b35f67d60d1ebd7de"},
-    {file = "warpcrypto-2.0.4-cp39-cp39-macosx_11_0_arm64.whl", hash = "sha256:5d01ac29fc699ebbaf0062307fe8e7224057d20f76bce9a12f13c07504552e9e"},
-    {file = "warpcrypto-2.0.4-cp39-cp39-manylinux_2_34_aarch64.whl", hash = "sha256:166412c18c19e79b2cbb0ccdacb5814208a9097ac3ce8786f36b6ac98561ef89"},
-    {file = "warpcrypto-2.0.4-cp39-cp39-manylinux_2_34_x86_64.whl", hash = "sha256:053b0eacaef201d84dd464f78b4460ea8faa0d4f12cca05804ed982afcd50f04"},
-    {file = "warpcrypto-2.0.4-cp39-cp39-win_amd64.whl", hash = "sha256:8d85c12707b2dda0ab875978b65534e585ad4838e0f69138c368cc03e6036c12"},
+    {file = "warpcrypto-2.0.5-cp310-cp310-macosx_11_0_arm64.whl", hash = "sha256:58e2231af5781c8dd4c9dfd20af174e29e0493494971e85c7d2dfa4fb1d2a4c5"},
+    {file = "warpcrypto-2.0.5-cp310-cp310-manylinux_2_34_aarch64.whl", hash = "sha256:f72c29a3082ecfde86980766a08f9ce6e311c0e64ea233391f687b5bba2d884b"},
+    {file = "warpcrypto-2.0.5-cp310-cp310-manylinux_2_34_x86_64.whl", hash = "sha256:4ee9459617ffa71cf428f84fd293ce02e9c93f80efaf350e99a9f1afa0d2415b"},
+    {file = "warpcrypto-2.0.5-cp310-cp310-win_amd64.whl", hash = "sha256:0517556d6be954708b7fd0f31a04eff09530ab7bd7c84ee222793528f5c63559"},
+    {file = "warpcrypto-2.0.5-cp311-cp311-macosx_11_0_arm64.whl", hash = "sha256:3a40a1de654b29e03d5b93b79fffc40cc40f58911d5ef2f5caed056f5360e50c"},
+    {file = "warpcrypto-2.0.5-cp311-cp311-manylinux_2_34_aarch64.whl", hash = "sha256:210ed53c30643064e3bb3cbf7dc1ddb10c11b837f2edc71a3730e52e69f2ef2f"},
+    {file = "warpcrypto-2.0.5-cp311-cp311-manylinux_2_34_x86_64.whl", hash = "sha256:bdc9f94e35434b1d1df04c99b57b713e5ce192d7619e603786d3b3364982071f"},
+    {file = "warpcrypto-2.0.5-cp311-cp311-win_amd64.whl", hash = "sha256:ab67a465b3c1b85d11b4cf8d4ae6890e0f6b192aa5a07c9b9add1fb4eeaee8b3"},
+    {file = "warpcrypto-2.0.5-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:373889483a6fb037701ee5cef4078babd6c7ebd2d7b4e886492bfbc3a9bd40d5"},
+    {file = "warpcrypto-2.0.5-cp312-cp312-manylinux_2_34_aarch64.whl", hash = "sha256:5d1967f2052b83e12326bbfa0757eebc57fca34ddfbb0e7d0cfa57fdd98951bc"},
+    {file = "warpcrypto-2.0.5-cp312-cp312-manylinux_2_34_x86_64.whl", hash = "sha256:b7fc88936d4f60c3dd5a006edb7f498eb18ab9208f399fd7f47c0c40db5a4cde"},
+    {file = "warpcrypto-2.0.5-cp312-cp312-win_amd64.whl", hash = "sha256:02ebdd2a4bb49d02994b1b077813edc8e956c8ebfc844b097a29413a0f4d69a6"},
+    {file = "warpcrypto-2.0.5-cp313-cp313-macosx_11_0_arm64.whl", hash = "sha256:a33f69721ebb8168e3031b279922890f22dae0dfbbb3639e1e494dc35da51385"},
+    {file = "warpcrypto-2.0.5-cp313-cp313-manylinux_2_34_aarch64.whl", hash = "sha256:f72eba14782c65d110dd1757344368f378b712e7a0803407faf80660e01754bb"},
+    {file = "warpcrypto-2.0.5-cp313-cp313-manylinux_2_34_x86_64.whl", hash = "sha256:f1421dc337350821a0525cc7eb67a2ce3c9dce104972ff9e5d6d4d27ea6d2651"},
+    {file = "warpcrypto-2.0.5-cp313-cp313-win_amd64.whl", hash = "sha256:b9f7fd4b4ab45f4b3dd1994231c146b6b6f484ca4a85837860a37d9c0c0fe2f1"},
+    {file = "warpcrypto-2.0.5-cp314-cp314-macosx_11_0_arm64.whl", hash = "sha256:c25492f9be8da57fa12c2207c20a7507943e91acc22b81e54ee9aea672e3628c"},
+    {file = "warpcrypto-2.0.5-cp314-cp314-manylinux_2_34_aarch64.whl", hash = "sha256:6c852680a83c59c567c9c12ed70f7d88b5ccb4b54f096a0712aad12e4d79864d"},
+    {file = "warpcrypto-2.0.5-cp314-cp314-manylinux_2_34_x86_64.whl", hash = "sha256:6d8566f83ab09bad29b4945cd78a36c99095c21838347b30d2524778b63b9c0a"},
+    {file = "warpcrypto-2.0.5-cp314-cp314-win_amd64.whl", hash = "sha256:eb83ec0728edc5ece594802ae9e0addda89a82005833ec264dc0044faea38803"},
+    {file = "warpcrypto-2.0.5-cp39-cp39-macosx_11_0_arm64.whl", hash = "sha256:f614d3b1544d5e3f691aea62f0f5f38e5acbc8a0e4ddb87933a3579396531207"},
+    {file = "warpcrypto-2.0.5-cp39-cp39-manylinux_2_34_aarch64.whl", hash = "sha256:0f9622d7176959d57dd80d44af27ed57e5d5820745ad46c674391c50884d823e"},
+    {file = "warpcrypto-2.0.5-cp39-cp39-manylinux_2_34_x86_64.whl", hash = "sha256:ca5468645b8f5cee511936fe711928179d60e5b9baaa1275f008dfba6ebace08"},
+    {file = "warpcrypto-2.0.5-cp39-cp39-win_amd64.whl", hash = "sha256:5b332d40ea6e9a66d655627c54240fec04ea0e1350b2025e7be30cb248b4509f"},
 ]
 
 [[package]]
 name = "wzgram"
-version = "3.0.21"
+version = "3.0.27"
 description = "Elegant, modern and asynchronous Telegram MTProto API framework in Python for users and bots"
 optional = false
 python-versions = ">=3.10"
 groups = ["main"]
 files = [
-    {file = "wzgram-3.0.21-py3-none-any.whl", hash = "sha256:deda10a7851c53651c85ccdd20ec633152bbca6284c1e1b92161ee560d41c93a"},
-    {file = "wzgram-3.0.21.tar.gz", hash = "sha256:fba075aff6828d6ba3beebeda8c52be4acdca9db0202224d36e0592069bd06ad"},
+    {file = "wzgram-3.0.27-py3-none-any.whl", hash = "sha256:f5e410a3ef5bfeb4376979212cdc5dfe8c5169a5922d50bf9d36574ad5b781b3"},
+    {file = "wzgram-3.0.27.tar.gz", hash = "sha256:7fea659ce6f358875f00f2f00bebea9df2ec5502c397fc0df66139ea6f56647c"},
 ]
 
 [package.dependencies]
 aiosqlite = ">=0.20.0"
-pysocks = "1.7.1"
+pysocks = ">=1.7.1"
 uvloop = {version = "<=0.22.1", optional = true, markers = "(sys_platform == \"darwin\" or sys_platform == \"linux\") and extra == \"fast\""}
-warpcrypto = ">=2.0.4"
+warpcrypto = ">=2.0.5"
 
 [package.extras]
 dev = ["jinja2 (>=3)", "poethepoet (>=0.32)", "pytest (>=8)", "pytest-asyncio (>=0.24)", "pytest-cov (>=5)", "pyyaml (>=6)", "twine (>=5)"]
