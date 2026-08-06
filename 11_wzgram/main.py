@@ -11,9 +11,13 @@ from pyrogram import __version__
 import env
 from util import parse_message_link
 
+if not env.AUTH_STRING_WZ:
+    print("AUTH_STRING_WZ not set", file=sys.stderr)
+    sys.exit(1)
+
 app = Client(
     ":memory:",
-    session_string=env.AUTH_STRING,
+    session_string=env.AUTH_STRING_WZ,
     api_id=env.API_ID,
     api_hash=env.API_HASH,
     no_updates=True,
