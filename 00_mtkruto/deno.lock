@@ -1,14 +1,15 @@
 {
   "version": "5",
   "specifiers": {
-    "jsr:@mtkruto/mtkruto@0.215": "0.215.0",
+    "jsr:@mtkruto/ige-native@0.1": "0.1.0",
+    "jsr:@mtkruto/mtkruto@0.216": "0.216.0",
     "jsr:@roj/tgcrypto@1.0.3": "1.0.3",
     "jsr:@std/assert@1": "1.0.19",
     "jsr:@std/assert@1.0.19": "1.0.19",
     "jsr:@std/async@1.5.0": "1.5.0",
     "jsr:@std/bytes@1.0.6": "1.0.6",
     "jsr:@std/bytes@^1.0.6": "1.0.6",
-    "jsr:@std/cache@0.2.3": "0.2.3",
+    "jsr:@std/cache@0.2.4": "0.2.4",
     "jsr:@std/crypto@1.1.0": "1.1.0",
     "jsr:@std/datetime@0.225.7": "0.225.7",
     "jsr:@std/encoding@1.0.11": "1.0.11",
@@ -18,12 +19,15 @@
     "jsr:@std/media-types@1.1.0": "1.1.0",
     "jsr:@std/net@1.0.6": "1.0.6",
     "jsr:@std/path@1.1.6": "1.1.6",
-    "jsr:@std/streams@1.1.1": "1.1.1",
+    "jsr:@std/streams@1.1.2": "1.1.2",
     "npm:envalid@8": "8.1.0"
   },
   "jsr": {
-    "@mtkruto/mtkruto@0.215.0": {
-      "integrity": "ac05c67ca0e29e7ee6ecc8592f2f71877c8fe12cf0227d648b7292f6d46228f8",
+    "@mtkruto/ige-native@0.1.0": {
+      "integrity": "eb156d9ca0584c0f87e2dcc9968d47c17afefce05201b7f05a1b17f17583ecb2"
+    },
+    "@mtkruto/mtkruto@0.216.0": {
+      "integrity": "be543ce6877bda0debc65a2eaa25c6dd50109e275f1483d940cc7bc00007be73",
       "dependencies": [
         "jsr:@roj/tgcrypto",
         "jsr:@std/assert@1.0.19",
@@ -55,8 +59,8 @@
     "@std/bytes@1.0.6": {
       "integrity": "f6ac6adbd8ccd99314045f5703e23af0a68d7f7e58364b47d2c7f408aeb5820a"
     },
-    "@std/cache@0.2.3": {
-      "integrity": "4e0bcab2e61f7c5637937bfe2bb13ccdd15e4dc3092beb14b78726bea8c49916"
+    "@std/cache@0.2.4": {
+      "integrity": "3786a6961a8a851c651f6fa4c39d46e7ce9c098630689655ea53e5143eb3565b"
     },
     "@std/crypto@1.1.0": {
       "integrity": "b8d6d0a6377a32b213af2661ed7bf1062d94feac0c57def5526a8e74a95c3ec8"
@@ -85,8 +89,8 @@
         "jsr:@std/internal@^1.0.14"
       ]
     },
-    "@std/streams@1.1.1": {
-      "integrity": "92556d350e537e9dce527a6d08f6f15be3ff65e656079dea69d15252187c7613",
+    "@std/streams@1.1.2": {
+      "integrity": "0249bf9b78a999f57032ca4d8e7ccaa57579090242640b35ddc948fbb745d3af",
       "dependencies": [
         "jsr:@std/bytes@^1.0.6"
       ]
@@ -105,7 +109,8 @@
   },
   "workspace": {
     "dependencies": [
-      "jsr:@mtkruto/mtkruto@0.215",
+      "jsr:@mtkruto/ige-native@0.1",
+      "jsr:@mtkruto/mtkruto@0.216",
       "jsr:@std/assert@1",
       "npm:envalid@8"
     ]

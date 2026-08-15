@@ -48,6 +48,9 @@ jobs:
 
       - run: |
           cd 00_mtkruto/
+          curl --location --fail --silent --show-error \
+            --output libmtkruto_ige.so \
+            https://github.com/MTKruto/ige-native/raw/refs/heads/main/artifacts/linux-x86_64/libmtkruto_ige.so
           deno install
           deno -A main.ts
 

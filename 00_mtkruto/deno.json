@@ -3,7 +3,8 @@
     "dev": "deno run --watch main.ts"
   },
   "imports": {
-    "@mtkruto/mtkruto": "jsr:@mtkruto/mtkruto@^0.215.0",
+    "@mtkruto/ige-native": "jsr:@mtkruto/ige-native@^0.1.0",
+    "@mtkruto/mtkruto": "jsr:@mtkruto/mtkruto@^0.216.0",
     "@std/assert": "jsr:@std/assert@1",
     "envalid": "npm:envalid@^8.0.0"
   },

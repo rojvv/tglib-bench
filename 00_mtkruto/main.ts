@@ -1,5 +1,10 @@
-import { Client } from "@mtkruto/mtkruto";
+import { openNativeIge } from "@mtkruto/ige-native";
+import { Client, setIge256Decrypt, setIge256Encrypt } from "@mtkruto/mtkruto";
 import env from "./env.ts";
+
+const nativeIge = openNativeIge({ libraryPath: "./libmtkruto_ige.so" });
+setIge256Decrypt(nativeIge.ige256Decrypt);
+setIge256Encrypt(nativeIge.ige256Encrypt);
 
 const client = new Client({ authString: env.AUTH_STRING });
 
