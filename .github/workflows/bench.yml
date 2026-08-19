@@ -23,6 +23,7 @@ on:
           - 12_teleproto
           - 13_mtflute
           - 14_laragram
+          - 15_dzgram
         required: true
 
 permissions:
@@ -444,4 +445,31 @@ jobs:
           API_ID="$API_ID" API_HASH="$API_HASH" BOT_TOKEN="$BOT_TOKEN" AUTH_STRING="$AUTH_STRING" MESSAGE_LINK="$MESSAGE_LINK" CHAT_ID="$CHAT_ID" php main.php
 
           cd ..
+          ./_commit.sh
+
+  # 15_dzgram
+  dzgram:
+    if: github.event.inputs.library == '15_dzgram' || github.event.inputs.library == 'All'
+    runs-on: ubuntu-latest
+    env:
+      API_ID: ${{ secrets.API_ID }}
+      API_HASH: ${{ secrets.API_HASH }}
+      AUTH_STRING: ${{ secrets.AUTH_STRING_15 }}
+      MESSAGE_LINK: ${{ secrets.MESSAGE_LINK }}
+      CHAT_ID: ${{ secrets.CHAT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - run: python -m pip install poetry
+
+      - run: |
+          cd 15_dzgram/
+          poetry install
+          poetry run python main.py
+
+          cd ../
           ./_commit.sh
