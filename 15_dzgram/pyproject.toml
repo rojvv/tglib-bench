@@ -1,0 +1,16 @@
+[project]
+name = "15-dzgram"
+version = "0.1.0"
+description = ""
+requires-python = ">=3.11,<4.0"
+dependencies = [
+    "dzgram>=2.2.29",
+    "uvloop>=0.21.0"
+]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+package-mode = false
