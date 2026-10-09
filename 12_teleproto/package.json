@@ -2,7 +2,7 @@
   "type": "module",
   "dependencies": {
     "envalid": "^8.0.0",
-    "teleproto": "^1.229.3"
+    "teleproto": "^1.230.0"
   },
   "devDependencies": {
     "@types/node": "^24.0.7"
