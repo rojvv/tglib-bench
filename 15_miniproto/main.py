@@ -4,7 +4,7 @@ import time
 from importlib.metadata import version
 from pathlib import Path
 
-from miniproto import Client, ClientConfig, InMemorySessionStorage, event_loop
+from miniproto import Client, ClientConfig, InMemorySessionStorage, Peer, event_loop
 from miniproto.peers import input_channel_from_peer
 from miniproto.raw import functions, types
 
@@ -23,6 +23,11 @@ async def main():
             await app.sign_in_bot(env.BOT_TOKEN)
             print(await app.export_session_string())
             return
+
+        destination: int | Peer = env.CHAT_ID
+        if env.CHAT_ID > 0 and (await app.get_me()).is_bot:
+            # Bots can address user IDs with a zero hash, https://core.telegram.org/api/peers#access-hash
+            destination = Peer(id=env.CHAT_ID, kind="user", access_hash=0)
 
         chat_id, message_id = parse_message_link(env.MESSAGE_LINK)
         peer = await app.resolve_peer(chat_id)
@@ -48,7 +53,7 @@ async def main():
                 raise ValueError("Downloaded file size does not match the document size")
 
             timestamps.append(time.monotonic())
-            await app.send_file(env.CHAT_ID, file_name, force_file=True)
+            await app.send_file(destination, file_name, force_file=True)
             timestamps.append(time.monotonic())
 
     with open("results.json", "w", encoding="utf-8") as file:
