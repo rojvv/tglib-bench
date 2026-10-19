@@ -457,8 +457,9 @@ jobs:
       API_ID: ${{ secrets.API_ID }}
       API_HASH: ${{ secrets.API_HASH }}
       AUTH_STRING: ${{ secrets.AUTH_STRING_15 }}
-      MESSAGE_LINK: ${{ secrets.MESSAGE_LINK }}
+      BOT_TOKEN: ${{ secrets.BOT_TOKEN_15 }}
       CHAT_ID: ${{ secrets.CHAT_ID }}
+      MESSAGE_LINK: ${{ secrets.MESSAGE_LINK }}
     steps:
       - uses: actions/checkout@v7
 
