@@ -25,9 +25,14 @@ async def main():
             return
 
         destination: int | Peer = env.CHAT_ID
-        if env.CHAT_ID > 0 and (await app.get_me()).is_bot:
-            # Bots can address user IDs with a zero hash, https://core.telegram.org/api/peers#access-hash
-            destination = Peer(id=env.CHAT_ID, kind="user", access_hash=0)
+        if (await app.get_me()).is_bot:
+            # Bots can address peers by ID without fetching dialogs, https://core.telegram.org/api/peers#access-hash
+            if env.CHAT_ID > 0:
+                destination = Peer(id=env.CHAT_ID, kind="user", access_hash=0)
+            elif env.CHAT_ID < -1000000000000:
+                destination = Peer(id=-env.CHAT_ID - 1000000000000, kind="channel", access_hash=0)
+            else:
+                destination = Peer(id=-env.CHAT_ID, kind="chat")
 
         chat_id, message_id = parse_message_link(env.MESSAGE_LINK)
         peer = await app.resolve_peer(chat_id)
