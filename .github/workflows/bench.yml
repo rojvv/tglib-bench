@@ -23,6 +23,7 @@ on:
           - 12_teleproto
           - 13_mtflute
           - 14_laragram
+          - 15_miniproto
         required: true
 
 permissions:
@@ -42,7 +43,7 @@ jobs:
       MESSAGE_LINK: ${{ secrets.MESSAGE_LINK }}
       CHAT_ID: ${{ secrets.CHAT_ID }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: denoland/setup-deno@v2
 
@@ -68,9 +69,9 @@ jobs:
       MESSAGE_LINK: ${{ secrets.MESSAGE_LINK }}
       CHAT_ID: ${{ secrets.CHAT_ID }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.13"
 
@@ -95,13 +96,13 @@ jobs:
       MESSAGE_LINK: ${{ secrets.MESSAGE_LINK }}
       CHAT_ID: ${{ secrets.CHAT_ID }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
         with:
           version: 9
 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v7
         with:
           node-version: 23.x
           cache: pnpm
@@ -126,9 +127,9 @@ jobs:
       MESSAGE_LINK: ${{ secrets.MESSAGE_LINK }}
       CHAT_ID: ${{ secrets.CHAT_ID }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.13"
 
@@ -153,11 +154,11 @@ jobs:
       MESSAGE_LINK: ${{ secrets.MESSAGE_LINK }}
       CHAT_ID: ${{ secrets.CHAT_ID }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: denoland/setup-deno@v2
 
-      - uses: actions/cache@v4
+      - uses: actions/cache@v6
         with:
           path: 04_tdlib/tdlib
           key: tdlib
@@ -181,13 +182,13 @@ jobs:
       chat_id: ${{ secrets.CHAT_ID }}
       session_pathname: WTelegram.session
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-dotnet@v4
+      - uses: actions/setup-dotnet@v6
         with:
           dotnet-version: "8.x"
 
-      - uses: actions/cache@v4
+      - uses: actions/cache@v6
         with:
           path: 05_wtelegramclient/WTelegram.session
           key: wtelegramclient
@@ -210,11 +211,11 @@ jobs:
       MESSAGE_LINK: ${{ secrets.MESSAGE_LINK }}
       CHAT_ID: ${{ secrets.CHAT_ID }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: denoland/setup-deno@v2
 
-      - uses: actions/cache@v4
+      - uses: actions/cache@v6
         with:
           path: 06_madelineproto/session.madeline
           key: madelineproto
@@ -243,9 +244,9 @@ jobs:
       MESSAGE_LINK: ${{ secrets.MESSAGE_LINK }}
       CHAT_ID: ${{ secrets.CHAT_ID }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.13"
 
@@ -270,9 +271,9 @@ jobs:
       MESSAGE_LINK: ${{ secrets.MESSAGE_LINK }}
       CHAT_ID: ${{ secrets.CHAT_ID }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v7
         with:
           go-version: "1.25"
           cache-dependency-path: 08_gogram/go.sum
@@ -295,9 +296,9 @@ jobs:
       MESSAGE_LINK: ${{ secrets.MESSAGE_LINK }}
       CHAT_ID: ${{ secrets.CHAT_ID }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v7
         with:
           go-version: "1.26"
           cache-dependency-path: 09_mtgo/go.sum
@@ -320,9 +321,9 @@ jobs:
       MESSAGE_LINK: ${{ secrets.MESSAGE_LINK }}
       CHAT_ID: ${{ secrets.CHAT_ID }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v7
         with:
           go-version: "1.26"
           cache-dependency-path: 10_gotd/go.sum
@@ -345,9 +346,9 @@ jobs:
       MESSAGE_LINK: ${{ secrets.MESSAGE_LINK }}
       CHAT_ID: ${{ secrets.CHAT_ID }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.13"
 
@@ -372,13 +373,13 @@ jobs:
       MESSAGE_LINK: ${{ secrets.MESSAGE_LINK }}
       CHAT_ID: ${{ secrets.CHAT_ID }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
         with:
           version: 9
 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v7
         with:
           node-version: 23.x
           cache: pnpm
@@ -403,7 +404,7 @@ jobs:
       MESSAGE_LINK: ${{ secrets.MESSAGE_LINK }}
       CHAT_ID: ${{ secrets.CHAT_ID }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: dart-lang/setup-dart@v1
         with:
@@ -416,6 +417,7 @@ jobs:
 
           cd ../
           ./_commit.sh
+
   # 14_laragram
   laragram:
     if: github.event.inputs.library == '14_laragram' || github.event.inputs.library == 'All'
@@ -428,7 +430,8 @@ jobs:
       MESSAGE_LINK: ${{ secrets.MESSAGE_LINK }}
       CHAT_ID: ${{ secrets.CHAT_ID }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
+
       - uses: shivammathur/setup-php@v2
         with:
           php-version: "8.3"
@@ -444,4 +447,32 @@ jobs:
           API_ID="$API_ID" API_HASH="$API_HASH" BOT_TOKEN="$BOT_TOKEN" AUTH_STRING="$AUTH_STRING" MESSAGE_LINK="$MESSAGE_LINK" CHAT_ID="$CHAT_ID" php main.php
 
           cd ..
+          ./_commit.sh
+
+  # 15_miniproto
+  miniproto:
+    if: github.event.inputs.library == '15_miniproto' || github.event.inputs.library == 'All'
+    runs-on: ubuntu-latest
+    env:
+      API_ID: ${{ secrets.API_ID }}
+      API_HASH: ${{ secrets.API_HASH }}
+      AUTH_STRING: ${{ secrets.AUTH_STRING_15 }}
+      BOT_TOKEN: ${{ secrets.BOT_TOKEN_15 }}
+      CHAT_ID: ${{ secrets.CHAT_ID }}
+      MESSAGE_LINK: ${{ secrets.MESSAGE_LINK }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: astral-sh/setup-uv@v10.3.0
+        with:
+          python-version: "3.13"
+          enable-cache: true
+          cache-dependency-glob: 15_miniproto/uv.lock
+
+      - run: |
+          cd 15_miniproto/
+          uv sync --locked
+          uv run --no-sync python main.py
+
+          cd ../
           ./_commit.sh
