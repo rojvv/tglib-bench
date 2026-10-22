@@ -30,7 +30,12 @@ async def main():
             if env.CHAT_ID > 0:
                 destination = Peer(id=env.CHAT_ID, kind="user", access_hash=0)
             elif env.CHAT_ID < -1000000000000:
-                destination = Peer(id=-env.CHAT_ID - 1000000000000, kind="channel", access_hash=0)
+                channel_id = -env.CHAT_ID - 1000000000000
+                channel_info = await app.invoke(functions.ChannelsGetChannels(id=(types.InputChannel(channel_id=channel_id, access_hash=0),)))
+                channel = next((chat for chat in channel_info.chats if isinstance(chat, types.Channel) and chat.id == channel_id), None)
+                if channel is None or channel.access_hash is None or channel.left or channel.min:
+                    raise ValueError("Upload destination did not resolve to a joined channel/supergroup with a full access hash")
+                destination = Peer(id=channel.id, kind="channel", access_hash=channel.access_hash)
             else:
                 destination = Peer(id=-env.CHAT_ID, kind="chat")
 
