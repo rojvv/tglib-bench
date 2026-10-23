@@ -12,8 +12,8 @@ importers:
         specifier: ^8.0.0
         version: 8.2.0
       teleproto:
-        specifier: ^1.230.0
-        version: 1.230.0
+        specifier: ^1.232.0
+        version: 1.232.0
     devDependencies:
       '@types/node':
         specifier: ^24.0.7
@@ -21,43 +21,43 @@ importers:
 
 packages:
 
-  '@cifrante/darwin-arm64@0.5.1':
-    resolution: {integrity: sha512-EbHhxuZiJZvBd0189id//loVXQ6C/c/Q6hlPlGmvOGb3ZLY6+WtkRKDpYkf1N14uXSCEqjpdIB1tycPYCRSwGA==}
+  '@cifrante/darwin-arm64@0.6.0':
+    resolution: {integrity: sha512-h+lTeJ+tCtGmLvB4nylKemxcO2kfPzSyb3CdmSALvR3g22ziAExen1WFPhEPhpRmbuX2LwqDQFaDWflllX4hHg==}
     cpu: [arm64]
     os: [darwin]
 
-  '@cifrante/darwin-x64@0.5.1':
-    resolution: {integrity: sha512-DhOK5XPKtCWzHyAVlNYx6PqWFu3zfFnaLIdl7wi+abOKaX2kQT9kc9NGdBO2IvwLqYmMJZAxW6FoNG8sGPsr4g==}
+  '@cifrante/darwin-x64@0.6.0':
+    resolution: {integrity: sha512-fe9PyZqA0qNTyamRWH2cfRbIkwGP1xzYIcBpJKpdlSTZHCoYTib9MesJOJtzYzcIZ403c/zozU/seA+tl77a5Q==}
     cpu: [x64]
     os: [darwin]
 
-  '@cifrante/linux-arm64-gnu@0.5.1':
-    resolution: {integrity: sha512-McK2jBbonyqa4oVnghglZnSEEaf5Ek1EV0JKid9NLO0+ovBbjc4HnwS+FEpnPyZiE7GbPMj/Brlhj8Ws/S8Ifg==}
+  '@cifrante/linux-arm64-gnu@0.6.0':
+    resolution: {integrity: sha512-0ctEFOxiteczeL2PZxHbw7PQ19aV+40+k3jdQJyQ3gW3w8Xr0irmgNf1DB65SIpWnjvc3s8ql9VMpUMDaM1TNg==}
     cpu: [arm64]
     os: [linux]
 
-  '@cifrante/linux-arm64-musl@0.5.1':
-    resolution: {integrity: sha512-QPnoBbGqp0PUxihF1ukFuHmi2yMnY4vZJRoHKhy/u4RoDw/Cj1ziMXhR15sYq6CZcSLE9+tD6lwOXORo65ZIwQ==}
+  '@cifrante/linux-arm64-musl@0.6.0':
+    resolution: {integrity: sha512-2BICmNVrqqVK39vn1ji17vSrw7xTCTkQleyk9bW9TgiwJhYs1vbIpg/G6fNXMHHULeVfXN/GAZIZ8wl/mjvErg==}
     cpu: [arm64]
     os: [linux]
 
-  '@cifrante/linux-x64-gnu@0.5.1':
-    resolution: {integrity: sha512-4iKGBgw3SuiwSkXV3tU8PImsoMCEY35P47csS08xu/Ng8OK3/QlzEerdxnirRCeos2B0kjhyYRqrPlGyAz94mg==}
+  '@cifrante/linux-x64-gnu@0.6.0':
+    resolution: {integrity: sha512-vC4GR2K2UQwvIAigZs4YaMoX+M00uMRF9Yz6qsXSuphcuCZRHLPcjHHBWhq9ZQ9FcSigS0ihgBiyYzfXcKz2Nw==}
     cpu: [x64]
     os: [linux]
 
-  '@cifrante/linux-x64-musl@0.5.1':
-    resolution: {integrity: sha512-nVBgVpj/CCt+Tft0qkxHfsEX0IbA3pfEw8YGKFPgN1fcqstuKt/Zm/GvKmCL8DzuLR6Q+pceG4Kcn/eUEKlRqw==}
+  '@cifrante/linux-x64-musl@0.6.0':
+    resolution: {integrity: sha512-LZa1KWLP4rxohT9vYC3UOqI9XS1JwBZR8L2yAQwC45fRgoN4EcKopaVxA7zvdq5v8EexdV+dgBcYdDljdqfv1g==}
     cpu: [x64]
     os: [linux]
 
-  '@cifrante/win32-arm64@0.5.1':
-    resolution: {integrity: sha512-/6VvnQr5Nup/ovQSJSaCZ2+mhbZxmF8CPaOa1bgv+Fj6i9ld/SyuPhleCLWyPstvoZa1bmjbv/eZN2nYUyjxhQ==}
+  '@cifrante/win32-arm64@0.6.0':
+    resolution: {integrity: sha512-Phj7DKvudAtP+vDVBSvEjWC8gkiguQt8Clnn74RyvawYu9lR8PoNdM98/j0vPRyfWvwuRtg+zLN6Jdt9lLAmpA==}
     cpu: [arm64]
     os: [win32]
 
-  '@cifrante/win32-x64@0.5.1':
-    resolution: {integrity: sha512-qvbffmosnliht9u70SauiRtTT4p03kJIrCwvKHyRokGc3Bo22Po9EqoghTycvbD298SNAfNs1czuM8BJm1CHmQ==}
+  '@cifrante/win32-x64@0.6.0':
+    resolution: {integrity: sha512-LD7A22rHyIrTml5uL49/s3Jz/Tw5zsyZa6Fzz3EH8q5TJWq2cNKOSD7rdUwHLNIAqPHHOYZiEbhMlB1Slyk5OA==}
     cpu: [x64]
     os: [win32]
 
@@ -68,8 +68,8 @@ packages:
     resolution: {integrity: sha512-QxD8cf2eVqJOOz63z6JIN9BzvVs/dlySa5HGSBH5xtR8dPteIRQnBxxKqkNTiT6jbDTF6jAfrd4oMcND9RGbQg==}
     engines: {node: '>=0.6'}
 
-  cifrante@0.5.1:
-    resolution: {integrity: sha512-twUYiWNbXnqUSc6MJ/lDwLRg9dur783Kfp3CawmEwemN8sKRsHBzS99DXYus0nkanDo67FQ5tyyKpAWTz8Ml0g==}
+  cifrante@0.6.0:
+    resolution: {integrity: sha512-SeKW5whBnFx+pwZ+BfWcqOgDyuIH8gCRvlXQiLcm1wAldSRdeuyQxWXld23l4W/wsGURcdczd0dm/QBRBWurDw==}
     engines: {node: '>=18'}
 
   envalid@8.2.0:
@@ -110,8 +110,8 @@ packages:
   store2@2.14.4:
     resolution: {integrity: sha512-srTItn1GOvyvOycgxjAnPA63FZNwy0PTyUBFMHRM+hVFltAeoh0LmNBz9SZqUS9mMqGk8rfyWyXn3GH5ReJ8Zw==}
 
-  teleproto@1.230.0:
-    resolution: {integrity: sha512-sX8Xr6BV7Hz/BMU6ZkkgBDhs/2Qnv9g1sf+NLt860piR68SptrDLrUPdWfCrEJpgFAtz8f+pXycrnQyvPanvSQ==}
+  teleproto@1.232.0:
+    resolution: {integrity: sha512-dW6f8If1ezPOYUoOynAEXXAgvljKQgSQoLuconA/QSfgWNhHnU1UAEi3HQoQu4o5ttMvvx+QzI6Fpv0noBFltg==}
     engines: {node: '>=18'}
 
   tslib@2.8.1:
@@ -125,28 +125,28 @@ packages:
 
 snapshots:
 
-  '@cifrante/darwin-arm64@0.5.1':
+  '@cifrante/darwin-arm64@0.6.0':
     optional: true
 
-  '@cifrante/darwin-x64@0.5.1':
+  '@cifrante/darwin-x64@0.6.0':
     optional: true
 
-  '@cifrante/linux-arm64-gnu@0.5.1':
+  '@cifrante/linux-arm64-gnu@0.6.0':
     optional: true
 
-  '@cifrante/linux-arm64-musl@0.5.1':
+  '@cifrante/linux-arm64-musl@0.6.0':
     optional: true
 
-  '@cifrante/linux-x64-gnu@0.5.1':
+  '@cifrante/linux-x64-gnu@0.6.0':
     optional: true
 
-  '@cifrante/linux-x64-musl@0.5.1':
+  '@cifrante/linux-x64-musl@0.6.0':
     optional: true
 
-  '@cifrante/win32-arm64@0.5.1':
+  '@cifrante/win32-arm64@0.6.0':
     optional: true
 
-  '@cifrante/win32-x64@0.5.1':
+  '@cifrante/win32-x64@0.6.0':
     optional: true
 
   '@types/node@24.13.2':
@@ -155,16 +155,16 @@ snapshots:
 
   big-integer@1.6.52: {}
 
-  cifrante@0.5.1:
+  cifrante@0.6.0:
     optionalDependencies:
-      '@cifrante/darwin-arm64': 0.5.1
-      '@cifrante/darwin-x64': 0.5.1
-      '@cifrante/linux-arm64-gnu': 0.5.1
-      '@cifrante/linux-arm64-musl': 0.5.1
-      '@cifrante/linux-x64-gnu': 0.5.1
-      '@cifrante/linux-x64-musl': 0.5.1
-      '@cifrante/win32-arm64': 0.5.1
-      '@cifrante/win32-x64': 0.5.1
+      '@cifrante/darwin-arm64': 0.6.0
+      '@cifrante/darwin-x64': 0.6.0
+      '@cifrante/linux-arm64-gnu': 0.6.0
+      '@cifrante/linux-arm64-musl': 0.6.0
+      '@cifrante/linux-x64-gnu': 0.6.0
+      '@cifrante/linux-x64-musl': 0.6.0
+      '@cifrante/win32-arm64': 0.6.0
+      '@cifrante/win32-x64': 0.6.0
 
   envalid@8.2.0:
     dependencies:
@@ -193,10 +193,10 @@ snapshots:
 
   store2@2.14.4: {}
 
-  teleproto@1.230.0:
+  teleproto@1.232.0:
     dependencies:
       big-integer: 1.6.52
-      cifrante: 0.5.1
+      cifrante: 0.6.0
       mime: 3.0.0
       node-localstorage: 2.2.1
       socks: 2.8.9
